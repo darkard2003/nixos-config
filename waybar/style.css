@@ -1,0 +1,189 @@
+@import "colors-waybar.css";
+
+* {
+    font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+}
+
+window#waybar {
+    background-color: transparent;
+    color: @foreground;
+    transition-property: background-color;
+    transition-duration: .5s;
+}
+
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+
+window#waybar.empty {
+    background-color: transparent;
+}
+
+window#waybar.solo {
+    background-color: #FFFFFF;
+}
+
+
+window#waybar.termite {
+    background-color: #3F3F3F;
+}
+
+window#waybar.chromium {
+    background-color: #000000;
+    border: none;
+}
+
+button {
+    border: none;
+    border-radius: 0;
+}
+
+button:hover {
+    background: inherit;
+}
+
+
+#workspaces button {
+    padding: 2 5px;
+    background-color: transparent;
+    color: @foreground;
+    border-radius: 8px;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+#workspaces button:hover {
+    background: @color8;
+}
+
+#workspaces button.focused {
+    background-color: @color6;
+    color: @background;
+}
+
+#workspaces button.urgent {
+    background-color: @color1;
+    color: @foreground;
+}
+
+#custom-media {
+    min-width: 100px;
+}
+
+#language,
+#keyboard-state {
+    padding: 0 5px;
+    margin: 0 5px;
+    min-width: 16px;
+}
+
+#power-profiles-daemon {
+    padding-right: 15px;
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#custom-arch,
+#custom-pi-indicator,
+#custom-weather,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#power-profiles-daemon,
+#custom-power,
+#custom-notification,
+#bluetooth,
+#mpd,
+#language,
+#keyboard-state,
+#privacy-item {
+    margin: 0 5;
+    color: @foreground;
+}
+
+#window,
+#workspaces {
+    margin: 0;
+}
+
+.modules-left {
+    background-color: @color0;
+    border-radius: 8px;
+    padding: 0 5px;
+}
+
+.modules-right {
+    background-color: @color0;
+    border-radius: 8px;
+    padding: 0 5px;
+}
+
+.modules-center {
+    background-color: @color0;
+    border-radius: 8px;
+    padding: 0 5px;
+    margin: 0 10px;
+}
+
+#power-profiles-daemon {
+    padding-right: 15px;
+}
+
+@keyframes blink {
+    to {
+        background-color: @color1;
+        color: @foreground;
+    }
+}
+
+/* Using steps() instead of linear as a timing function to limit cpu usage */
+#battery.critical:not(.charging) {
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: steps(12);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#power-profiles-daemon {
+    padding-right: 15px;
+}
+
+label:focus {
+    background-color: @color8;
+}
+
+#keyboard-state > label {
+    padding: 0 5px;
+}
+
+#keyboard-state > label.locked {
+    background: @color8;
+}
+
+#scratchpad.empty {
+    background-color: transparent;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
+
+#privacy {
+    padding: 0;
+}

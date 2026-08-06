@@ -1,0 +1,148 @@
+// -*- mode: jsonc -*-
+[
+  // =========================================================================
+  // PRIMARY MONITOR CONFIGURATION (Laptop Screen)
+  // =========================================================================
+  {
+    "output": [
+      "eDP-1"
+    ], // Locks this bar configuration strictly to your main screen
+    "position": "top",
+    "spacing": 4,
+    "margin-left": 10,
+    "margin-right": 10,
+    "margin-top": 5,
+    "height": 30,
+    "include": [
+      "./shared_modules.jsonc"
+    ],
+    "modules-left": [
+      "custom/arch",
+      "clock",
+      "custom/weather",
+      "custom/notification",
+      "memory",
+      "cpu",
+      "disk",
+      "temperature",
+      "custom/media"
+    ],
+    "modules-center": [
+      "niri/workspaces",
+      "sway/workspaces",
+      "sway/mode",
+      "sway/scratchpad"
+    ],
+    "modules-right": [
+      "idle_inhibitor",
+      "pulseaudio",
+      "custom/pi-indicator",
+      "network",
+      "bluetooth",
+      "backlight",
+      "tray",
+      "battery",
+      "custom/power"
+    ],
+    "niri/workspaces": {
+      "disable-scroll": true,
+      "all-outputs": false,
+      "warp-on-scroll": false,
+      "format": "{icon}",
+      "persistent-workspaces": {
+        "1": [],
+        "2": [],
+        "3": []
+      },
+      "format-icons": {
+        "1": " ",
+        "2": " ",
+        "3": " ",
+        "4": " ",
+        "5": "󰎱",
+        "6": "󰎳",
+        "7": "󰎶",
+        "8": "󰎹",
+        "9": "󰎼",
+        "urgent": " ",
+        "default": ""
+      }
+    },
+    "sway/workspaces": {
+      "disable-scroll": true,
+      "all-outputs": true,
+      "warp-on-scroll": false,
+      "format": "{icon}",
+      "persistent-workspaces": {
+        "1": [],
+        "2": [],
+        "3": []
+      },
+      "format-icons": {
+        "1": " ",
+        "2": " ",
+        "3": " ",
+        "4": " ",
+        "5": "󰎱",
+        "6": "󰎳",
+        "7": "󰎶",
+        "8": "󰎹",
+        "9": "󰎼",
+        "urgent": " ",
+        "default": ""
+      }
+    }
+  },
+  // =========================================================================
+  // EXTERNAL MONITOR CONFIGURATION
+  // =========================================================================
+  {
+    // Catch-all outputs for external monitors
+    "output": [
+      "HDMI-A-1",
+      "DP-1",
+      "DP-2"
+    ],
+    "position": "top",
+    "spacing": 4,
+    "margin-left": 10,
+    "margin-right": 10,
+    "margin-top": 5,
+    "height": 30,
+    "include": [
+      "./shared_modules.jsonc"
+    ],
+    "modules-left": [
+      "custom/arch",
+      "clock",
+      "custom/weather",
+      "memory",
+      "cpu"
+    ],
+    "modules-center": [
+      "niri/workspaces",
+      "sway/workspaces"
+    ],
+    "modules-right": [
+      "pulseaudio",
+      "tray",
+      "custom/power"
+    ],
+    // Secondary-specific workspaces (no persistent workspaces, limited icon set)
+    "niri/workspaces": {
+      "disable-scroll": true,
+      "all-outputs": false,
+      "warp-on-scroll": false,
+      "format": "{icon}",
+      "persistent-workspaces": {},
+      "format-icons": {
+        "1": " ",
+        "2": " ",
+        "3": " ",
+        "4": " ",
+        "urgent": " ",
+        "default": ""
+      }
+    }
+  }
+]

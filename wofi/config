@@ -1,0 +1,9 @@
+prompt=Search applications and commands...
+allow_images=true
+hide_scroll=true
+insensitive=true
+key_down=Alt-j
+key_up=Alt-k
+key_left=Alt-h
+key_right=Alt-l
+key_expand=Alt-o

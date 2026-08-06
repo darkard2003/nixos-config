@@ -1,0 +1,21 @@
+set $wallpaper /home/dark/arch-config/wallpapers/cowboy-blue.jpg
+
+set $background #090404
+set $foreground #c1c0c0
+
+set $color0 #090404
+set $color1 #394559
+set $color2 #565E6C
+set $color3 #B37A48
+set $color4 #737A85
+set $color5 #7C838C
+set $color6 #999CA3
+set $color7 #c1c0c0
+set $color8 #665353
+set $color9 #394559
+set $color10 #565E6C
+set $color11 #B37A48
+set $color12 #737A85
+set $color13 #7C838C
+set $color14 #999CA3
+set $color15 #c1c0c0
