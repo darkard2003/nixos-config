@@ -1,0 +1,80 @@
+#!/bin/bash
+
+#!/bin/bash
+
+# Configuration
+WALLPAPER_DIR="../wallpapers" # Your wallpaper directory
+THUMB_DIR="$HOME/.cache/wal_thumbs"      # Cache directory for thumbnails
+THUMB_SIZE="128x128"                     # Thumbnail size (e.g., 128x128 pixels)
+
+# Create thumbnail directory if it doesn't exist
+mkdir -p "$THB_DIR"
+
+# Function to generate or update thumbnails
+# This function echoes the path to the thumbnail
+generate_thumbnail() {
+    local full_path="$1"
+    local filename=$(basename "$full_path")
+    local thumb_path="$THUMB_DIR/${filename%.*}.png" # Thumbnails will be PNGs
+
+    # Check if thumbnail exists and is up-to-date (original newer than thumbnail)
+    if [ ! -f "$thumb_path" ] || [ "$full_path" -nt "$thumb_path" ]; then
+        # echo "Generating thumbnail for: $filename" >&2 # For debugging, sends to stderr
+        convert "$full_path" -thumbnail "${THUMB_SIZE}^" -gravity center -extent "${THUMB_SIZE}" "$thumb_path"
+    fi
+    echo "$thumb_path" # Output the thumbnail path
+}
+
+# --- Main Script Logic ---
+
+declare -a WOFI_ENTRIES # Array to hold Wofi entries (thumbnail + display name)
+declare -A FULL_PATHS   # Associative array to map display name back to full original path
+
+# 1. Prepare Wofi entries and map full paths
+# Finds all image files in the wallpaper directory
+WALLPAPERS=$(find "$WALLPAPER_DIR" -maxdepth 1 -type f \
+    -regex ".*\.\(jpg\|jpeg\|png\|gif\)" | sort)
+
+for full_path in $WALLPAPERS; do
+    filename=$(basename "$full_path")
+    display_name="${filename%.*}" # e.g., "my_cool_wallpaper" from "my_cool_wallpaper.jpg"
+    thumb_path=$(generate_thumbnail "$full_path")
+
+    # Store the full path linked to the display name
+    FULL_PATHS["$display_name"]="$full_path"
+
+    # Wofi entry format: \x00icon\x1f/path/to/icon\tDisplay Name
+    WOFI_ENTRIES+=("\x00icon\x1f${thumb_path}\t${display_name}")
+done
+
+# 2. Launch Wofi with thumbnails and capture selection
+# --dmenu: Standard dmenu mode, reads from stdin, prints selected to stdout
+# --prompt: Custom prompt text
+# --allow-images: Crucial for Wofi to render the \x00icon\x1f sequences
+# --parse-markup: Allows Pango markup (good practice, even if not directly used here for text)
+# --lines: Number of lines to show in Wofi (adjust as needed)
+# --width: Width of the Wofi window (adjust as needed)
+# --css: Path to your Wofi CSS file (optional, but good for consistent styling)
+SELECTED_WOFI_ENTRY=$(printf "%s\n" "${WOFI_ENTRIES[@]}" | wofi \
+    --show dmenu \
+    --prompt "🖼️ Select Wallpaper" \
+    --allow-images \
+    --parse-markup \
+    --lines 7 \
+    --width 35% \
+    --css "$HOME/.config/wofi/style.css")
+
+# 3. Extract the full path of the selected wallpaper
+if [ -n "$SELECTED_WOFI_ENTRY" ]; then
+    # Extract the display name (text after the last tab character)
+    DISPLAY_NAME=$(echo "$SELECTED_WOFI_ENTRY" | sed -r 's/.*?\t(.*)/\1/')
+
+    # Look up the full path using the associative array
+    SELECTED_WALLPAPER_PATH="${FULL_PATHS[$DISPLAY_NAME]}"
+
+    # Output the full path of the selected wallpaper to stdout
+    echo "$SELECTED_WALLPAPER_PATH"
+else
+    # If no selection was made (e.g., Wofi closed)
+    echo "" # Return an empty string
+fi

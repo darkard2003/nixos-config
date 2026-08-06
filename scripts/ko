@@ -1,0 +1,54 @@
+#!/bin/bash
+
+set -eo pipefail
+
+if [[ -z "$KITTY_WINDOW_ID" ]]; then
+	echo "Error: KITTY_WINDOW_ID is not set." >&2
+	exit 1
+fi
+
+# If an argument is provided, set the opacity
+if (($# == 1)); then
+	input=$1
+	if ! [[ "$input" =~ ^[0-9]+$ ]] || (($input < 0)) || (($input > 10)); then
+		echo "Error: Opacity must be an integer between 0 and 10." >&2
+		exit 1
+	fi
+
+	opacity=$(printf "%.1f" "$(bc -l <<<"$input / 10")")
+	kitty @ set-background-opacity --match id:"$KITTY_WINDOW_ID" "$opacity"
+	echo "Opacity set to $opacity"
+	exit 0
+fi
+
+# If no argument, toggle opacity
+if ! command -v jq &>/dev/null; then
+	echo "Error: jq is not installed." >&2
+	exit 1
+fi
+
+current_opacity=$(kitty @ ls | jq --argjson id "$KITTY_WINDOW_ID" '
+    .[] | .tabs[] | .windows[] | select(.id == $id) | .background_opacity
+')
+
+# Fallback for older kitty versions
+if [[ -z "$current_opacity" ]]; then
+	current_opacity=$(kitty @ ls | jq --arg id "$KITTY_WINDOW_ID" '
+        .[] | select(.id == ($id | tonumber)) | .background_opacity
+    ')
+fi
+
+if [[ -z "$current_opacity" ]]; then
+	echo "Error: Could not determine current opacity." >&2
+	exit 1
+fi
+
+# Toggle between 0.7 and 1.0
+if (($(bc -l <<<"$current_opacity < 1.0"))); then
+	new_opacity=1.0
+else
+	new_opacity=0.7
+fi
+
+kitty @ set-background-opacity --match id:"$KITTY_WINDOW_ID" "$new_opacity"
+echo "Opacity set to $new_opacity"

@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+options="Mirror|wl-present mirror
+Set Output|wl-present set-output
+Set Region|wl-present set-region
+Unset Region|wl-present unset-region
+Set Scaling|wl-present set-scaling
+Toggle Freeze|wl-present toggle-freeze
+Custom|wl-present custom"
+
+selected=$(echo "$options" | cut -d'|' -f1 | wofi -d -i -p  "Presentation Mode:")
+
+if [ -n "$selected" ]; then
+    command=$(echo "$options" | grep "^$selected|" | cut -d'|' -f2)
+
+    $command
+fi
