@@ -40,6 +40,7 @@ in
     pavucontrol
     remmina
     moonlight-qt
+    dbeaver-bin
 
     # Utilities & Script dependencies
     bc
