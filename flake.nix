@@ -17,9 +17,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-flatpak.url = "github:gmodena/nix-flatpak";
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, antigravity-nix, awww, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, antigravity-nix, awww, nix-index-database, ... }@inputs:
     let
       username = "dark";
       hostname = "dark-nix";
@@ -38,7 +42,12 @@
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = {inherit username antigravity-nix awww inputs; };
-            home-manager.users.${username}= import ./home.nix;
+            home-manager.users.${username} = {
+              imports = [
+                nix-index-database.homeModules.nix-index
+                ./home.nix
+              ];
+            };
           }
         ];
       };
