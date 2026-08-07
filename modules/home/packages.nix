@@ -1,4 +1,10 @@
-{ config, pkgs, antigravity-nix, awww, ... }:
+{
+  config,
+  pkgs,
+  antigravity-nix,
+  awww,
+  ...
+}:
 
 let
   system = pkgs.stdenv.hostPlatform.system;
@@ -32,6 +38,9 @@ in
     thunar
     fastfetch
     pavucontrol
+    remmina
+    moonlight-qt
+    rustdesk-futter
 
     # Utilities & Script dependencies
     bc
@@ -51,11 +60,13 @@ in
     cargo
     rustc
     nodejs
-    (python3.withPackages (ps: with ps; [
-      pynvim
-      pygobject3
-      requests
-    ]))
+    (python3.withPackages (
+      ps: with ps; [
+        pynvim
+        pygobject3
+        requests
+      ]
+    ))
     tree-sitter
     fd
   ];

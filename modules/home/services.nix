@@ -14,6 +14,7 @@
   services.cliphist.enable = true;
 
   services.kanshi.enable = true;
+  services.kdeconnect.enable = true;
 
   services.swayidle = {
     enable = true;
@@ -32,4 +33,5 @@
       before-sleep = "${pkgs.swaylock-effects}/bin/swaylock -f -C ~/.cache/wallust/swaylock-config 2>/dev/null || ${pkgs.swaylock-effects}/bin/swaylock -f";
     };
   };
+
 }
