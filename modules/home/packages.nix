@@ -38,7 +38,6 @@ in
     jq
     imagemagick
     bluetui
-    comma
 
     # Neovim & Mason runtime dependencies
     unzip

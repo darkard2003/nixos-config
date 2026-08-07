@@ -1,4 +1,12 @@
-{ config, lib, pkgs, hostname, username, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  hostname,
+  username,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -6,6 +14,7 @@
     ./modules/system/desktop.nix
     ./modules/system/packages.nix
     ./modules/system/services.nix
+    ./modules/system/virt.nix
   ];
 
   networking.hostName = hostname;
@@ -18,7 +27,14 @@
   users.users.${username} = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "networkmanager" "video" "input" "uinput" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "video"
+      "input"
+      "uinput"
+      "libvirtd"
+    ];
     packages = with pkgs; [
       tree
     ];
