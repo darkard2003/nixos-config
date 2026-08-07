@@ -89,7 +89,7 @@
       setopt COMPLETE_IN_WORD
 
       [ -f "$HOME/.cache/wallust/colors.sh" ] && source "$HOME/.cache/wallust/colors.sh"
-      command -v fastfetch &>/dev/null && fastfetch
+      command -v fastfetch &>/dev/null && fastfetch -c examples/7.jsonc
     '';
   };
 }
