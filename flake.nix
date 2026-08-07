@@ -5,21 +5,27 @@
     nixpkgs.url = "nixpkgs/nixos-26.05";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    antigravity-nix = {
+      url = "github:jacopone/antigravity-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    awww = {
+      url = "git+https://codeberg.org/LGFae/awww";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, antigravity-nix, awww, ... }@inputs:
     let
       username = "dark";
       hostname = "dark-nix";
-      system = "x86_64-linux";
     in
     {
       nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
-        inherit system;
-
         specialArgs = {inherit username hostname inputs;};
 
         modules = [
@@ -30,7 +36,8 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = {inherit username; };
+            home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = {inherit username antigravity-nix awww inputs; };
             home-manager.users.${username}= import ./home.nix;
           }
         ];

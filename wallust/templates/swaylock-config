@@ -1,0 +1,39 @@
+image=/home/dark/.cache/wallust/lockscreen_blur.png
+scaling=fill
+
+indicator-thickness=10
+indicator-radius=50
+font=sans-serif
+font-size=24
+
+inside-color={{background | strip}}BB
+inside-clear-color={{color2 | strip}}BB
+inside-caps-lock-color={{color4 | strip}}BB
+inside-ver-color={{color3 | strip}}BB
+inside-wrong-color={{color1 | strip}}BB
+
+ring-color={{color8 | strip}}FF
+ring-clear-color={{color2 | strip}}FF
+ring-caps-lock-color={{color4 | strip}}FF
+ring-ver-color={{color3 | strip}}FF
+ring-wrong-color={{color1 | strip}}FF
+
+line-color={{color8 | strip}}FF
+line-clear-color={{color2 | strip}}FF
+line-caps-lock-color={{color4 | strip}}FF
+line-ver-color={{color3 | strip}}FF
+line-wrong-color={{color1 | strip}}FF
+
+text-color={{foreground | strip}}FF
+text-clear-color={{foreground | strip}}FF
+text-caps-lock-color={{foreground | strip}}FF
+text-ver-color={{foreground | strip}}FF
+text-wrong-color={{foreground | strip}}FF
+
+key-hl-color={{color5 | strip}}FF
+bs-hl-color={{color9 | strip}}FF
+separator-color=00000000
+
+layout-text-color={{foreground | strip}}FF
+layout-bg-color={{color0 | strip}}BB
+layout-border-color={{color8 | strip}}FF

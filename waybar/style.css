@@ -1,87 +1,92 @@
-@import "colors-waybar.css";
+/* Fallback Default Theme Colors (Used if Wallust is not run yet) */
+@define-color background #1e1e2e;
+@define-color foreground #cdd6f4;
+@define-color color0 #1e1e2e;
+@define-color color1 #f38ba8;
+@define-color color2 #a6e3a1;
+@define-color color3 #f9e2af;
+@define-color color4 #89b4fa;
+@define-color color5 #f5c2e7;
+@define-color color6 #94e2d5;
+@define-color color7 #bac2de;
+@define-color color8 #585b70;
+
+/* Dynamic Wallust Theme (Overrides default fallbacks when generated) */
+@import url("file:///home/dark/.cache/wallust/colors-waybar.css");
 
 * {
-    font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-    font-size: 12px;
+    font-family: "JetBrainsMono Nerd Font", "Roboto", sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
 }
 
 window#waybar {
     background-color: transparent;
     color: @foreground;
-    transition-property: background-color;
-    transition-duration: .5s;
 }
 
-window#waybar.hidden {
-    opacity: 0.2;
-}
-
-
-window#waybar.empty {
-    background-color: transparent;
-}
-
-window#waybar.solo {
-    background-color: #FFFFFF;
-}
-
-
-window#waybar.termite {
-    background-color: #3F3F3F;
-}
-
-window#waybar.chromium {
-    background-color: #000000;
-    border: none;
-}
-
-button {
-    border: none;
-    border-radius: 0;
-}
-
-button:hover {
-    background: inherit;
-}
-
-
-#workspaces button {
-    padding: 2 5px;
-    background-color: transparent;
-    color: @foreground;
+/* Module Containers: Glassmorphic Rounded Rectangles */
+.modules-left,
+.modules-center,
+.modules-right {
+    background-color: alpha(@background, 0.88);
+    border: 1px solid alpha(@color8, 0.45);
     border-radius: 8px;
-    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    padding: 3px 10px;
+}
+
+.modules-center {
+    padding: 3px 8px;
+}
+
+/* Workspaces */
+#workspaces button {
+    padding: 2px 10px;
+    margin: 2px 3px;
+    background: transparent;
+    background-color: transparent;
+    background-image: none;
+    box-shadow: none;
+    text-shadow: none;
+    color: alpha(@foreground, 0.85);
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
 }
 
 #workspaces button:hover {
-    background: @color8;
-}
-
-#workspaces button.focused {
-    background-color: @color6;
-    color: @background;
-}
-
-#workspaces button.urgent {
-    background-color: @color1;
+    background: alpha(@color8, 0.35);
+    background-color: alpha(@color8, 0.35);
+    background-image: none;
+    box-shadow: none;
+    text-shadow: none;
     color: @foreground;
 }
 
-#custom-media {
-    min-width: 100px;
+#workspaces button.focused,
+#workspaces button.active {
+    background: alpha(@foreground, 0.25);
+    background-color: alpha(@foreground, 0.25);
+    background-image: none;
+    box-shadow: none;
+    text-shadow: none;
+    color: @foreground;
+    font-weight: bold;
 }
 
-#language,
-#keyboard-state {
-    padding: 0 5px;
-    margin: 0 5px;
-    min-width: 16px;
+#workspaces button.urgent {
+    background: @color1;
+    background-color: @color1;
+    background-image: none;
+    box-shadow: none;
+    text-shadow: none;
+    color: @background;
+    font-weight: bold;
 }
 
-#power-profiles-daemon {
-    padding-right: 15px;
-}
-
+/* Module Base Styling */
 #clock,
 #battery,
 #cpu,
@@ -91,99 +96,132 @@ button:hover {
 #backlight,
 #network,
 #pulseaudio,
-#wireplumber,
-#custom-media,
-#custom-arch,
-#custom-pi-indicator,
+#custom-notification,
+#custom-nix,
 #custom-weather,
+#custom-media,
+#custom-pi-indicator,
+#bluetooth,
 #tray,
 #mode,
-#idle_inhibitor,
 #scratchpad,
-#power-profiles-daemon,
-#custom-power,
-#custom-notification,
-#bluetooth,
-#mpd,
-#language,
-#keyboard-state,
-#privacy-item {
-    margin: 0 5;
+#idle_inhibitor,
+#custom-power {
+    padding: 2px 8px;
+    margin: 0 2px;
+}
+
+/* Vibrant Module Color Palette (Wallust Dynamic Accents) */
+#custom-nix {
+    color: @color4;
+    padding-left: 6px;
+    font-size: 16px;
+}
+
+#cpu {
+    color: @color2;
+}
+
+#memory {
+    color: @color3;
+}
+
+#disk {
+    color: @color6;
+}
+
+#temperature {
+    color: @color5;
+}
+
+#temperature.critical {
+    color: @color1;
+}
+
+#clock {
     color: @foreground;
 }
 
-#window,
-#workspaces {
-    margin: 0;
+#custom-weather {
+    color: @foreground;
 }
 
-.modules-left {
-    background-color: @color0;
-    border-radius: 8px;
-    padding: 0 5px;
+#custom-media {
+    color: @color5;
 }
 
-.modules-right {
-    background-color: @color0;
-    border-radius: 8px;
-    padding: 0 5px;
+#network {
+    color: @foreground;
 }
 
-.modules-center {
-    background-color: @color0;
-    border-radius: 8px;
-    padding: 0 5px;
-    margin: 0 10px;
+#network.disconnected {
+    color: @color8;
 }
 
-#power-profiles-daemon {
-    padding-right: 15px;
+#bluetooth {
+    color: @foreground;
 }
 
-@keyframes blink {
-    to {
-        background-color: @color1;
-        color: @foreground;
-    }
+#bluetooth.disabled {
+    color: @color8;
 }
 
-/* Using steps() instead of linear as a timing function to limit cpu usage */
+#pulseaudio {
+    color: @foreground;
+}
+
+#pulseaudio.muted {
+    color: @color8;
+}
+
+#backlight {
+    color: @foreground;
+}
+
+#battery {
+    color: @color2;
+}
+
+#battery.charging, #battery.plugged {
+    color: @color2;
+}
+
+#battery.warning:not(.charging) {
+    color: @color3;
+}
+
 #battery.critical:not(.charging) {
+    color: @color1;
     animation-name: blink;
     animation-duration: 0.5s;
-    animation-timing-function: steps(12);
+    animation-timing-function: linear;
     animation-iteration-count: infinite;
     animation-direction: alternate;
 }
 
-#power-profiles-daemon {
-    padding-right: 15px;
+#custom-notification {
+    color: @color5;
 }
 
-label:focus {
-    background-color: @color8;
+#idle_inhibitor {
+    color: @color3;
 }
 
-#keyboard-state > label {
-    padding: 0 5px;
+#custom-power {
+    color: @foreground;
+    padding-right: 6px;
 }
 
-#keyboard-state > label.locked {
-    background: @color8;
+#tray {
+    padding-left: 6px;
+    padding-right: 6px;
 }
 
-#scratchpad.empty {
-    background-color: transparent;
+@keyframes blink {
+    to {
+        color: @color1;
+        opacity: 0.5;
+    }
 }
 
-#tray > .passive {
-    -gtk-icon-effect: dim;
-}
 
-#tray > .needs-attention {
-    -gtk-icon-effect: highlight;
-}
-
-#privacy {
-    padding: 0;
-}

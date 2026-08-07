@@ -1,3 +1,4 @@
+style=/home/dark/.config/wofi/style.css
 prompt=Search applications and commands...
 allow_images=true
 hide_scroll=true

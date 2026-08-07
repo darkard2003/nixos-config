@@ -1,47 +1,147 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-CONFIG_DIR="$HOME/arch-config"
+# Configuration
+CONFIG_DIR="$HOME/nixos-config"
 WALLPAPER_DIR="$CONFIG_DIR/wallpapers"
-TEMP_DIR="$CONFIG_DIR/temp"
-THEME_DIR="$HOME/.cache/wal"
+LOG_DIR="$HOME/.cache/wallust"
+LOG_FILE="$LOG_DIR/wallpaper.log"
 
-set -e
+mkdir -p "$LOG_DIR"
 
-image=$(ls "$WALLPAPER_DIR" | sed 's/\..*$//' | wofi -d)
+log() {
+    local level="$1"
+    shift
+    local msg="$*"
+    local timestamp
+    timestamp=$(date "+%Y-%m-%d %H:%M:%S")
+    local formatted="[$timestamp] [$level] $msg"
+    echo "$formatted"
+    echo "$formatted" >> "$LOG_FILE"
+}
 
-# Check if the image is selected 
+log "INFO" "=================================================="
+log "INFO" "Wallpaper & Theme Switcher triggered"
 
-if [ -z "$image" ]; then
-  echo "No image selected"
-  exit 1
+# Step 1: Early dependency check
+missing_deps=()
+
+check_dep() {
+    local cmd="$1"
+    if ! command -v "$cmd" &>/dev/null; then
+        missing_deps+=("$cmd")
+    fi
+}
+
+check_dep "awww"
+check_dep "wallust"
+check_dep "wofi"
+check_dep "magick"
+
+if [ ${#missing_deps[@]} -ne 0 ]; then
+    log "ERROR" "Missing required dependencies: ${missing_deps[*]}"
+    log "ERROR" "Please install missing packages before running wallpaper script."
+    exit 1
 fi
 
-echo "Changing sway wallpaper to $image"
-echo "output * bg $WALLPAPER_DIR/$image.jpg fill" > $CONFIG_DIR/sway/wallpaper.conf
-echo "spawn-sh-at-startup \"swaybg -i $WALLPAPER_DIR/'$image'.jpg\"" > $CONFIG_DIR/niri/wallpaper.kdl
+log "INFO" "All required dependencies verified: awww, wallust, wofi, magick"
 
-echo "Generating pywal colorscheme"
-wal -i $WALLPAPER_DIR/$image.jpg
+# Step 2: Wallpaper directory check
+if [ ! -d "$WALLPAPER_DIR" ]; then
+    WALLPAPER_DIR="$HOME/Pictures/wallpapers"
+fi
 
-echo "Copying theme"
-cp $THEME_DIR/colors-sway $CONFIG_DIR/sway
-cp $THEME_DIR/colors-waybar.css $CONFIG_DIR/waybar
-cp $THEME_DIR/colors.css $CONFIG_DIR/swaync
-cp $THEME_DIR/colors.sh $CONFIG_DIR/swaylock
-cp $THEME_DIR/colors.sh $CONFIG_DIR/wob
+if [ ! -d "$WALLPAPER_DIR" ]; then
+    log "ERROR" "Wallpaper directory not found at $WALLPAPER_DIR"
+    exit 1
+fi
 
-echo "Generating SwayLock config"
-sh $CONFIG_DIR/swaylock/generate.sh $WALLPAPER_DIR/$image.jpg
+log "INFO" "Wallpaper directory: $WALLPAPER_DIR"
 
-echo "Generating Wob config"
-sh $CONFIG_DIR/wob/generate.sh
+wallpaper_path=""
 
-echo "Reloading swaync"
-swaync-client -R && swaync-client -rs
+# Step 3: Image selection (Strict, no silent fallbacks)
+if [ -n "${1:-}" ]; then
+    if [ -f "$1" ]; then
+        wallpaper_path="$1"
+    elif [ -f "$WALLPAPER_DIR/$1" ]; then
+        wallpaper_path="$WALLPAPER_DIR/$1"
+    else
+        log "ERROR" "Specified wallpaper file '$1' does not exist."
+        exit 1
+    fi
+    log "INFO" "Using specified image argument: $wallpaper_path"
+else
+    log "INFO" "Launching Wofi wallpaper selector..."
+    selected_file=$(find "$WALLPAPER_DIR" -maxdepth 1 -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" -o -iname "*.gif" \) -printf "%f\n" | wofi -d -i -p "Select Wallpaper 🖼️")
+    
+    if [ -z "$selected_file" ]; then
+        log "ERROR" "No wallpaper selected from Wofi. Aborting."
+        exit 1
+    fi
+    
+    wallpaper_path="$WALLPAPER_DIR/$selected_file"
+    log "INFO" "Selected via Wofi: $selected_file"
+fi
 
-# # Check if running in niri
-# if [ -n "$NIRI_SOCKET" ]; then
-#   echo "Running in niri, killing swaybg"
-#   killall swaybg
-#   swaybg -i $WALLPAPER_DIR/$image.jpg &
-# fi
+if [ ! -f "$wallpaper_path" ]; then
+    log "ERROR" "Resolved wallpaper path '$wallpaper_path' is not a valid file."
+    exit 1
+fi
+
+log "INFO" "Target wallpaper image: $wallpaper_path"
+
+# Step 4: Ensure awww-daemon is active and apply wallpaper
+if ! pgrep -x "awww-daemon" > /dev/null; then
+    log "INFO" "Starting awww-daemon background service..."
+    awww-daemon &
+    sleep 0.5
+fi
+
+log "INFO" "Applying wallpaper via awww daemon..."
+if ! awww img "$wallpaper_path" --transition-type wipe --transition-angle 45 --transition-duration 2 --transition-fps 60 2>>"$LOG_FILE"; then
+    log "WARN" "awww img command exited with non-zero (Wayland display socket may be inactive in headless test)."
+fi
+
+# Step 5: Generate blurred lockscreen image for swaylock
+log "INFO" "Generating blurred lockscreen background via ImageMagick..."
+mkdir -p "$HOME/.cache/wallust"
+magick "$wallpaper_path" -filter Gaussian -resize 20% -define filter:sigma=10.0 -modulate 90,100,100 -resize 2560x1600! "$HOME/.cache/wallust/lockscreen_blur.png" >>"$LOG_FILE" 2>&1 || true
+
+# Step 6: Run Wallust color palette generation
+log "INFO" "Generating multi-tool color palettes via Wallust..."
+if ! wallust run -d "$CONFIG_DIR/wallust" "$wallpaper_path" >>"$LOG_FILE" 2>&1; then
+    log "ERROR" "Wallust palette generation failed for image: $wallpaper_path"
+    exit 1
+fi
+
+log "INFO" "Wallust color palette generated successfully."
+
+# Step 6: Live reload UI components
+log "INFO" "Reloading UI components with new color palette..."
+
+if command -v swaymsg &>/dev/null && [ -n "${WAYLAND_DISPLAY:-}" ]; then
+    if swaymsg reload >>"$LOG_FILE" 2>&1; then
+        log "INFO" "Sway window manager reloaded."
+    else
+        log "WARN" "swaymsg reload skipped."
+    fi
+fi
+
+if command -v swaync-client &>/dev/null; then
+    swaync-client -R >>"$LOG_FILE" 2>&1 || true
+    swaync-client -rs >>"$LOG_FILE" 2>&1 || true
+    log "INFO" "SwayNC notification daemon reloaded."
+fi
+
+if pgrep -x .waybar-wrapped &>/dev/null || pgrep -f "(^|/)waybar$" &>/dev/null; then
+    pkill -SIGUSR2 -x .waybar-wrapped 2>/dev/null || pkill -f -SIGUSR2 "(^|/)waybar$" 2>/dev/null || true
+    log "INFO" "Waybar status bar reloaded (SIGUSR2)."
+fi
+
+if pgrep -x "kitty" &>/dev/null; then
+    pkill -USR1 kitty 2>/dev/null || true
+    log "INFO" "Kitty terminal reloaded (SIGUSR1)."
+fi
+
+log "SUCCESS" "Wallpaper and theme color palettes updated successfully!"

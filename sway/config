@@ -1,7 +1,6 @@
 include sysvar.conf
 include display.conf
 include vars.conf
-include custom.d/vars.conf
 include desktoprules.conf
 include idle.conf
 include touchpad.conf
@@ -12,8 +11,5 @@ include windowrules.conf
 include colors.conf
 include custom.d/*.conf
 include blurfx.conf
-include wallpaper.conf
-
-bar swaybar_command waybar
 
 xwayland enable

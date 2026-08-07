@@ -211,8 +211,8 @@
     "on-click-right": "swaync-client -d -sw",
     "escape": true
   },
-  "custom/arch": {
-    "format": ""
+  "custom/nix": {
+    "format": ""
   },
   "custom/pi-indicator": {
     "exec": "$HOME/.config/waybar/scripts/check-server.py",

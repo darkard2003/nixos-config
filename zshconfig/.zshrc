@@ -77,6 +77,11 @@ alias gc='git commit'
 alias gp='git push'
 alias gl='git log --oneline --graph --decorate'
 
+## NixOS Rebuild
+alias nswitch="sudo nixos-rebuild switch --flake $HOME/nixos-config#dark-nix"
+alias nboot="sudo nixos-rebuild boot --flake $HOME/nixos-config#dark-nix"
+alias ntest="nix build $HOME/nixos-config#nixosConfigurations.dark-nix.config.system.build.toplevel --dry-run"
+
 ## Random
 alias ssh='kitten ssh'
 alias cat='bat'
@@ -96,14 +101,16 @@ path+=(
 )
 
 
-eval "$(zoxide init zsh)"
+if command -v zoxide &>/dev/null; then
+  eval "$(zoxide init zsh)"
+fi
 
-source "$HOME/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
-source "$HOME/.zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-source "$HOME/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
+[ -f "$HOME/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh" ] && source "$HOME/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh"
+[ -f "$HOME/.zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh" ] && source "$HOME/.zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+[ -f "$HOME/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh" ] && source "$HOME/.zsh/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh"
 
 zstyle ':autocomplete:*' min-input 3
 zstyle ':autocomplete:*' delay 0.5  # seconds (float)
 
-\cat .cache/wal/sequences
-fastfetch
+[ -f "$HOME/.cache/wallust/colors.sh" ] && source "$HOME/.cache/wallust/colors.sh"
+command -v fastfetch &>/dev/null && fastfetch

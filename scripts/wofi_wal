@@ -1,14 +1,12 @@
 #!/bin/bash
 
-#!/bin/bash
-
 # Configuration
 WALLPAPER_DIR="../wallpapers" # Your wallpaper directory
 THUMB_DIR="$HOME/.cache/wal_thumbs"      # Cache directory for thumbnails
 THUMB_SIZE="128x128"                     # Thumbnail size (e.g., 128x128 pixels)
 
 # Create thumbnail directory if it doesn't exist
-mkdir -p "$THB_DIR"
+mkdir -p "$THUMB_DIR"
 
 # Function to generate or update thumbnails
 # This function echoes the path to the thumbnail

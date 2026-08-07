@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 NOTES_DIR="$HOME/notes"
 TERMINAL="kitty"
