@@ -40,7 +40,6 @@ in
     pavucontrol
     remmina
     moonlight-qt
-    rustdesk-futter
 
     # Utilities & Script dependencies
     bc
