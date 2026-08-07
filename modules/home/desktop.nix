@@ -1,12 +1,13 @@
 { config, pkgs, awww, ... }:
 
 let
+  system = pkgs.stdenv.hostPlatform.system;
   dotfiles = "${config.home.homeDirectory}/nixos-config";
 
   wallpaperScript = pkgs.writeShellApplication {
     name = "wallpaper";
     runtimeInputs = with pkgs; [
-      awww.packages.${pkgs.system}.default
+      awww.packages.${system}.default
       wallust
       wofi
       imagemagick

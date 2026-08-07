@@ -1,5 +1,8 @@
 { config, pkgs, antigravity-nix, awww, ... }:
 
+let
+  system = pkgs.stdenv.hostPlatform.system;
+in
 {
   home.packages = with pkgs; [
     neovim
@@ -15,10 +18,10 @@
     wtype
     xdg-user-dirs
     wl-mirror
-    antigravity-nix.packages.${pkgs.system}.default
-    antigravity-nix.packages.${pkgs.system}.google-antigravity-ide
-    antigravity-nix.packages.${pkgs.system}.google-antigravity-cli
-    awww.packages.${pkgs.system}.default
+    antigravity-nix.packages.${system}.default
+    antigravity-nix.packages.${system}.google-antigravity-ide
+    antigravity-nix.packages.${system}.google-antigravity-cli
+    awww.packages.${system}.default
     wallust
     dex
     wob
@@ -45,6 +48,8 @@
     gcc
     gnumake
     cmake
+    cargo
+    rustc
     nodejs
     (python3.withPackages (ps: with ps; [
       pynvim

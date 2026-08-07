@@ -183,7 +183,7 @@ progressbar progress {
 }
 
 .notification-row .notification-background .notification .notification-action {
-  margin: 4px;
+  margin: 2px 4px;
   padding: 0;
 }
 
@@ -192,23 +192,40 @@ progressbar progress {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--noti-border-color);
   color: var(--text-color);
+  padding: 6px 14px;
+  margin: 3px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
 }
 
 .notification-row .notification-background .notification .notification-action > button:hover {
   background: var(--color4);
   color: var(--color0);
+  border-color: var(--color4);
 }
 
 .notification-group {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 2px 0;
   transition: opacity 200ms ease-in-out;
 }
 
 .notification-group:focus {
-  background: var(--noti-bg-focus);
+  background: transparent;
 }
 
 .notification-group .notification-group-close-button .close-button {
   margin: 6px 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-color);
+}
+
+.notification-group .notification-group-close-button .close-button:hover {
+  background: var(--color1);
+  color: var(--foreground);
 }
 
 .notification-group .notification-group-buttons,
@@ -229,7 +246,7 @@ progressbar progress {
 }
 
 .notification-group.collapsed.not-expanded {
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .notification-group.collapsed .notification-row .notification {

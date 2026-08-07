@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -7,6 +12,7 @@
 
   services.openssh.enable = true;
   services.tailscale.enable = true;
+  services.fstrim.enable = true;
 
   services.pipewire = {
     enable = true;
@@ -28,7 +34,10 @@
     enable = true;
     keyboards = {
       default = {
-        extraDefCfg = "concurrent-tap-hold yes";
+        extraDefCfg = ''
+          process-unmapped-keys yes
+          concurrent-tap-hold yes
+        '';
         config = ''
           (defsrc
             caps  a   s   d   f   j   k   l   ;
@@ -40,14 +49,14 @@
           )
 
           (defalias
-            a (tap-hold $tap-time $hold-time a lalt)
-            s (tap-hold $tap-time $hold-time s lsft)
-            d (tap-hold $tap-time $hold-time d lctl)
-            f (tap-hold $tap-time $hold-time f lmet)
-            j (tap-hold $tap-time $hold-time j rmet)
-            k (tap-hold $tap-time $hold-time k rctl)
-            l (tap-hold $tap-time $hold-time l rsft)
-            ; (tap-hold $tap-time $hold-time ; ralt)
+            a (tap-hold-release $tap-time $hold-time a lalt)
+            s (tap-hold-release $tap-time $hold-time s lsft)
+            d (tap-hold-release $tap-time $hold-time d lctl)
+            f (tap-hold-release $tap-time $hold-time f lmet)
+            j (tap-hold-release $tap-time $hold-time j rmet)
+            k (tap-hold-release $tap-time $hold-time k rctl)
+            l (tap-hold-release $tap-time $hold-time l rsft)
+            ; (tap-hold-release $tap-time $hold-time ; ralt)
           )
 
           (deflayer base
@@ -60,10 +69,12 @@
 
   services.flatpak = {
     enable = true;
-    remotes = [{
-      name = "flathub";
-      location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
-    }];
+    remotes = [
+      {
+        name = "flathub";
+        location = "https://dl.flathub.org/repo/flathub.flatpakrepo";
+      }
+    ];
     packages = [
       "app.zen_browser.zen"
     ];
