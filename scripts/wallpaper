@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Configuration
-CONFIG_DIR="$HOME/nixos-config"
+CONFIG_DIR="${CONFIG_DIR:-$HOME/nixos-config}"
 WALLPAPER_DIR="$CONFIG_DIR/wallpapers"
 LOG_DIR="$HOME/.cache/wallust"
 LOG_FILE="$LOG_DIR/wallpaper.log"
@@ -103,10 +103,6 @@ if ! awww img "$wallpaper_path" --transition-type wipe --transition-angle 45 --t
     log "WARN" "awww img command exited with non-zero (Wayland display socket may be inactive in headless test)."
 fi
 
-# Step 5: Generate blurred lockscreen image for swaylock
-log "INFO" "Generating blurred lockscreen background via ImageMagick..."
-mkdir -p "$HOME/.cache/wallust"
-magick "$wallpaper_path" -filter Gaussian -resize 20% -define filter:sigma=10.0 -modulate 90,100,100 -resize 2560x1600! "$HOME/.cache/wallust/lockscreen_blur.png" >>"$LOG_FILE" 2>&1 || true
 
 # Step 6: Run Wallust color palette generation
 log "INFO" "Generating multi-tool color palettes via Wallust..."
@@ -144,4 +140,10 @@ if pgrep -x "kitty" &>/dev/null; then
     log "INFO" "Kitty terminal reloaded (SIGUSR1)."
 fi
 
+# Step 6: Generate blurred lockscreen image for swaylock
+log "INFO" "Generating blurred lockscreen background via ImageMagick..."
+mkdir -p "$HOME/.cache/wallust"
+magick "$wallpaper_path" -filter Gaussian -resize 20% -define filter:sigma=10.0 -modulate 90,100,100 -resize 2560x1600! "$HOME/.cache/wallust/lockscreen_blur.png" >>"$LOG_FILE" 2>&1 || true
+
 log "SUCCESS" "Wallpaper and theme color palettes updated successfully!"
+

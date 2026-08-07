@@ -40,6 +40,30 @@
     };
 
     initContent = ''
+      get_os_logo() {
+        if [[ -f /etc/os-release ]]; then
+          source /etc/os-release
+          case "$ID" in
+            "nixos")
+              echo "%F{#7ebbe6}%f";;
+            "ubuntu")
+              echo "%F{#E95420}󰕈%f";;
+            "debian")
+              echo "%F{#A80030}󰣚%f";;
+            "fedora")
+              echo "%F{#55A4E4}󰣛%f";;
+            "arch")
+              echo "%F{#1793D1}󰣇%f";;
+            *) 
+              echo "%F{#7ebbe6}%f";;
+          esac
+        elif [[ "$(uname -s)" == "Darwin" ]]; then
+          echo "%F{#A6A6A6}󰀵%f"
+        else
+          echo "%F{#7ebbe6}%f"
+        fi
+      }
+
       get_git_info() {
         if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
           return
@@ -54,7 +78,7 @@
       }
 
       setopt PROMPT_SUBST
-      PS1="%B%F{#7ebbe6}%f %F{blue}%n@%M%F{green} [%~]%b%f %(!.#.$) "
+      PS1="%B$(get_os_logo) %F{blue}%n@%M%F{green}[%~]%b%f%(!.#.$) "
       RPROMPT='$(get_git_info)'
 
       setopt AUTO_CD

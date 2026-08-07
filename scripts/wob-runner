@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+WOBSOCK="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/wob.sock"
+
+# Kill existing Wob and tail instances
+pkill -f "tail -f.*wob.sock" 2>/dev/null || true
+pkill -x wob 2>/dev/null || true
+
+# Re-create FIFO
+rm -f "$WOBSOCK"
+mkfifo "$WOBSOCK"
+
+# Locate config file (wallust generated or default)
+CONFIG_FILE="$HOME/.cache/wallust/wob.ini"
+if [ ! -f "$CONFIG_FILE" ]; then
+    CONFIG_FILE="$HOME/nixos-config/wob/wob.ini"
+fi
+
+# Run tail piped into wob
+exec tail -f "$WOBSOCK" | wob -c "$CONFIG_FILE"

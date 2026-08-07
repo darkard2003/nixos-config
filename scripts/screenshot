@@ -17,8 +17,8 @@ saveScreenshot(){
 
   local save_dir="${PICTURES_DIR}/Screenshot"
 
-  if [ ! -d $save_dir ]; then
-    mkdir -p $save_dir
+  if [ ! -d "$save_dir" ]; then
+    mkdir -p "$save_dir"
   fi
 
 
@@ -46,7 +46,8 @@ notify_and_open() {
 
 take_screenshot() {
     local mode="$1"
-    local filename=$(date +"%S:%M:%H_%d-%m-%Y_grim.png")
+    local filename
+    filename=$(date +"%S:%M:%H_%d-%m-%Y_grim.png")
     local tmp_path="/tmp/$filename"
     
     if [ "$mode" = "full" ]; then

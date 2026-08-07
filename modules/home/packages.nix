@@ -2,13 +2,9 @@
 
 {
   home.packages = with pkgs; [
-    kitty
     neovim
     zed-editor
-    waybar
     wofi
-    swaynotificationcenter
-    btop
     ripgrep
     tmux
     grim
@@ -25,27 +21,20 @@
     awww.packages.${pkgs.system}.default
     wallust
     dex
-    wlsunset
-    cliphist
     wob
     swaylock-effects
-    kanshi
     playerctl
     brightnessctl
     pulseaudio
     thunar
-    silicon
-    fontconfig
-    zoxide
     fastfetch
+    pavucontrol
 
     # Utilities & Script dependencies
-    bat
-    bat-extras.batman
     bc
     jq
     imagemagick
-    vimix-cursors
+    bluetui
 
     # Neovim & Mason runtime dependencies
     unzip
@@ -57,8 +46,11 @@
     gnumake
     cmake
     nodejs
-    python3
-    python3Packages.pynvim
+    (python3.withPackages (ps: with ps; [
+      pynvim
+      pygobject3
+      requests
+    ]))
     tree-sitter
     fd
   ];

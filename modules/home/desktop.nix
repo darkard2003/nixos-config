@@ -1,6 +1,64 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, awww, ... }:
 
+let
+  dotfiles = "${config.home.homeDirectory}/nixos-config";
+
+  wallpaperScript = pkgs.writeShellApplication {
+    name = "wallpaper";
+    runtimeInputs = with pkgs; [
+      awww.packages.${pkgs.system}.default
+      wallust
+      wofi
+      imagemagick
+      sway
+      swaynotificationcenter
+      procps
+      findutils
+      gnugrep
+    ];
+    text = builtins.readFile ../../scripts/wallpaper;
+  };
+
+  screenshotScript = pkgs.writeShellApplication {
+    name = "screenshot";
+    runtimeInputs = with pkgs; [
+      grim
+      slurp
+      wl-clipboard
+      libnotify
+      (tesseract.override { enableLanguages = [ "eng" ]; })
+      imagemagick
+      kitty
+      xdg-utils
+    ];
+    text = builtins.readFile ../../scripts/screenshot;
+  };
+
+  wofiEmojiScript = pkgs.writeScriptBin "wofi-emoji" ''
+    #!${pkgs.bash}/bin/bash
+    PATH="${pkgs.lib.makeBinPath (with pkgs; [ wofi wtype wl-clipboard coreutils gnused ])}:$PATH"
+    export PATH
+    ${builtins.readFile ../../scripts/wofi-emoji}
+  '';
+
+  mirrorScript = pkgs.writeShellApplication {
+    name = "mirror";
+    runtimeInputs = with pkgs; [
+      wofi
+      wl-mirror
+      gnugrep
+      coreutils
+    ];
+    text = builtins.readFile ../../scripts/mirror;
+  };
+in
 {
+  home.packages = [
+    wallpaperScript
+    screenshotScript
+    wofiEmojiScript
+    mirrorScript
+  ];
   home.pointerCursor = {
     name = "Vimix-cursors";
     package = pkgs.vimix-cursors;
@@ -41,48 +99,23 @@
     style.name = "adwaita-dark";
   };
 
-  wayland.windowManager.sway = {
-    enable = true;
-    package = pkgs.swayfx;
-    checkConfig = false;
-    config = null;
-  };
-
   home.sessionPath = [
     "$HOME/.local/bin"
   ];
 
   xdg.configFile = {
-    "sway".source = "${inputs.self}/sway";
-    "waybar".source = "${inputs.self}/waybar";
-    "wofi".source = "${inputs.self}/wofi";
-    "kitty".source = "${inputs.self}/kitty";
-    "swaync".source = "${inputs.self}/swaync";
-    "swaylock".source = "${inputs.self}/swaylock";
-    "wallust".source = "${inputs.self}/wallust";
-    "nvim".source = "${inputs.self}/nvim";
+    "sway".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/sway";
+    "waybar".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/waybar";
+    "wofi".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/wofi";
+    "swaync".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/swaync";
+    "swaylock".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/swaylock";
+    "wallust".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/wallust";
+    "wob".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/wob";
+    "nvim".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/nvim";
   };
 
-  home.file = {
-    ".local/bin/wallpaper" = {
-      source = "${inputs.self}/scripts/wallpaper";
-      executable = true;
-    };
-    ".local/bin/screenshot" = {
-      source = "${inputs.self}/scripts/screenshot";
-      executable = true;
-    };
-    ".local/bin/wofi-emoji" = {
-      source = "${inputs.self}/scripts/wofi-emoji";
-      executable = true;
-    };
-    ".local/bin/note" = {
-      source = "${inputs.self}/scripts/note";
-      executable = true;
-    };
-    ".local/bin/mirror" = {
-      source = "${inputs.self}/scripts/mirror";
-      executable = true;
-    };
+  home.file.".local/bin" = {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/scripts";
+    recursive = true;
   };
 }

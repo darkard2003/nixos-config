@@ -1,15 +1,7 @@
-include sysvar.conf
-include display.conf
-include vars.conf
-include desktoprules.conf
-include idle.conf
-include touchpad.conf
 include keybinds.conf
-include exec.conf
-include decoraion.conf
-include windowrules.conf
-include colors.conf
+include rules.conf
+include theme.conf
+include autostart.conf
 include custom.d/*.conf
-include blurfx.conf
 
 xwayland enable

@@ -11,3 +11,4 @@ kitty = { src = "colors-kitty.conf", target = "~/.cache/wallust/colors-kitty.con
 swaylock = { src = "swaylock-config", target = "~/.cache/wallust/swaylock-config" }
 wofi = { src = "colors-waybar.css", target = "~/.cache/wallust/colors-wofi.css" }
 shell = { src = "colors.sh", target = "~/.cache/wallust/colors.sh" }
+wob = { src = "wob.ini", target = "~/.cache/wallust/wob.ini" }

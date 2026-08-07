@@ -10,5 +10,6 @@
     ./modules/home/shell.nix
     ./modules/home/desktop.nix
     ./modules/home/programs.nix
+    ./modules/home/services.nix
   ];
 }
