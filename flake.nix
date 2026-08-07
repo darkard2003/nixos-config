@@ -29,7 +29,7 @@
         specialArgs = {inherit username hostname inputs;};
 
         modules = [
-          ./hardware-configuration.nix
+          /etc/nixos/hardware-configuration.nix
           ./configuration.nix
 
           home-manager.nixosModules.home-manager
