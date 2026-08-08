@@ -11,11 +11,9 @@ let
 in
 {
   home.packages = with pkgs; [
-    neovim
     zed-editor
     wofi
     ripgrep
-    tmux
     grim
     slurp
     wl-clipboard

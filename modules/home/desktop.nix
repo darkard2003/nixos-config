@@ -131,8 +131,8 @@ in
     "nvim".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/nvim";
   };
 
-  home.file.".local/bin" = {
-    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/scripts";
-    recursive = true;
-  };
+  # home.file.".local/bin" = {
+  #   source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/scripts";
+  #   recursive = true;
+  # };
 }

@@ -1,6 +1,21 @@
 { config, pkgs, ... }:
 
 {
+  programs.neovim = {
+    enable = true;
+    sideloadInitLua = true;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
+    extraPackages = with pkgs; [
+      gcc
+      gnumake
+      unzip
+
+      ripgrep
+      fd
+    ];
+  };
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
@@ -41,7 +56,6 @@
       targets = [ "sway-session.target" ];
     };
   };
-
   programs.kitty = {
     enable = true;
     font = {
@@ -69,6 +83,76 @@
   };
 
   programs.nix-index-database.comma.enable = true;
+
+  programs.lazygit.enable = true;
+
+  programs.tmux = {
+    enable = true;
+    baseIndex = 1;
+    mouse = true;
+    sensibleOnTop = true;
+    shortcut = "a";
+    terminal = "tmux-256color";
+
+    plugins = with pkgs.tmuxPlugins; [
+      catppuccin
+      yank
+      resurrect
+      continuum
+    ];
+
+    extraConfig = ''
+      bind b split-window -h -c "#{pane_current_path}"
+      bind v split-window -v -c "#{pane_current_path}"
+      bind c new-window -c "#{pane_current_path}"
+      unbind '"'
+      unbind %
+
+      # Easy reload of tmux config
+      bind r source-file ~/.config/tmux/tmux.conf 
+
+      # Vim movementr
+      bind h select-pane -L
+      bind j select-pane -D
+      bind k select-pane -U
+      bind l select-pane -R
+
+      set -g status-style bg=default
+
+      set -g allow-rename off
+
+      set-option -g status-position top
+      set -g renumber-windows on
+
+      # set extended key
+      set -g extended-keys on
+      set -g extended-keys-format csi-u
+
+      # Faster pane resizing
+      bind -r H resize-pane -L 5
+      bind -r J resize-pane -D 5
+      bind -r K resize-pane -U 5
+      bind -r L resize-pane -R 5
+
+      set -g status-left ""
+      set -g status-right '#[fg=#{@thm_crust},bg=#{@thm_teal}] session: #S '
+      set -g status-right-length 100
+
+      # Kitty image protocol
+      set -gq allow-passthrough on
+      set -g visual-activity off
+
+      # Vim mode copy
+      bind Space copy-mode
+      setw -g mode-keys vi
+      bind-key -T copy-mode-vi v send-keys -X begin-selection
+      bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+      bind-key -T copy-mode-vi V send-keys -X select-line
+      bind-key -T copy-mode-vi Y send-keys -X select-line
+      bind g display-popup -d '#{pane_current_path}' -w 80% -h 80% -E 'lazygit'
+    '';
+
+  };
 
   programs.home-manager.enable = true;
 }
