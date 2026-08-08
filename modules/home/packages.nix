@@ -39,8 +39,8 @@ in
     fastfetch
     pavucontrol
     remmina
-    moonlight-qt
     dbeaver-bin
+    rustdesk-flutter
 
     # Utilities & Script dependencies
     bc
