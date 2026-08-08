@@ -1,4 +1,5 @@
 {
+  self,
   config,
   pkgs,
   awww,
@@ -68,6 +69,16 @@ let
     ];
     text = builtins.readFile ../../scripts/mirror;
   };
+
+  noteScript = pkgs.writeShellApplication {
+    name = "note";
+    runtimeInputs = with pkgs; [
+      wofi
+      neovim
+      kitty
+    ];
+    text = builtins.readFile ../../scripts/note;
+  };
 in
 {
   home.packages = [
@@ -75,6 +86,7 @@ in
     screenshotScript
     wofiEmojiScript
     mirrorScript
+    noteScript
   ];
   home.pointerCursor = {
     name = "Vimix-cursors";

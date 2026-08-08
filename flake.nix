@@ -50,6 +50,7 @@
       nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit
+            self
             username
             hostname
             inputs
@@ -68,6 +69,7 @@
             home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = {
               inherit
+                self
                 username
                 antigravity-nix
                 awww
