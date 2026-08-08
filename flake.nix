@@ -16,21 +16,46 @@
       url = "git+https://codeberg.org/LGFae/awww";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     nix-flatpak.url = "github:gmodena/nix-flatpak";
+
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
-  outputs = { self, nixpkgs, home-manager, antigravity-nix, awww, nix-index-database, ... }@inputs:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      antigravity-nix,
+      awww,
+      nix-index-database,
+      zen-browser,
+      ...
+    }@inputs:
     let
       username = "dark";
       hostname = "dark-nix";
     in
     {
       nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit username hostname inputs;};
+        specialArgs = {
+          inherit
+            username
+            hostname
+            inputs
+            zen-browser
+            ;
+        };
 
         modules = [
           ./hardware-configuration.nix
@@ -41,7 +66,14 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = {inherit username antigravity-nix awww inputs; };
+            home-manager.extraSpecialArgs = {
+              inherit
+                username
+                antigravity-nix
+                awww
+                inputs
+                ;
+            };
             home-manager.users.${username} = {
               imports = [
                 nix-index-database.homeModules.nix-index
@@ -51,5 +83,5 @@
           }
         ];
       };
-  };
+    };
 }

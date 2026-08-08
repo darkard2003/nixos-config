@@ -1,8 +1,26 @@
 { config, pkgs, ... }:
 
 {
-  # Display Manager & Window Manager
-  services.displayManager.ly.enable = true;
+  services.displayManager.ly = {
+    enable = true;
+    settings = {
+      # Visuals
+      bigclock = true;
+      clock = "%Y-%m-%d %H:%M:%S";
+      animate = true;
+      animation = 1;
+
+      # Behavior
+      load = true;
+      save = true;
+      asterisks = true;
+      wayland_specifier = true;
+
+      bg = 0;
+      fg = 7;
+      border_fg = 8;
+    };
+  };
 
   programs.sway = {
     enable = true;
@@ -15,7 +33,10 @@
     enable = true;
     wlr.enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    config.common.default = [ "wlr" "gtk" ];
+    config.common.default = [
+      "wlr"
+      "gtk"
+    ];
   };
 
   # Polkit & Keyring Security
@@ -23,5 +44,5 @@
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.login.enableGnomeKeyring = true;
   security.pam.services.ly.enableGnomeKeyring = true;
-  security.pam.services.swaylock = {};
+  security.pam.services.swaylock = { };
 }

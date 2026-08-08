@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  zen-browser,
+  ...
+}:
 
 {
   nixpkgs.config.allowUnfree = true;
@@ -12,6 +17,7 @@
     silicon
     fontconfig
     tailscale
+    zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   environment.sessionVariables = {
@@ -22,15 +28,18 @@
     SDL_VIDEODRIVER = "wayland";
     XDG_CURRENT_DESKTOP = "sway";
     XDG_SESSION_TYPE = "wayland";
-    LD_LIBRARY_PATH = "${pkgs.lib.makeLibraryPath (with pkgs; [
-      fontconfig
-      freetype
-      expat
-      harfbuzz
-      libxcb
-      libxkbcommon
-      stdenv.cc.cc.lib
-    ])}";
+    LD_LIBRARY_PATH = "${pkgs.lib.makeLibraryPath (
+      with pkgs;
+      [
+        fontconfig
+        freetype
+        expat
+        harfbuzz
+        libxcb
+        libxkbcommon
+        stdenv.cc.cc.lib
+      ]
+    )}";
   };
 
   fonts.packages = with pkgs; [
@@ -39,7 +48,10 @@
   ];
 
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     auto-optimise-store = true;
   };
 
