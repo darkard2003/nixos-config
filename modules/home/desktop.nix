@@ -1,4 +1,9 @@
-{ config, pkgs, awww, ... }:
+{
+  config,
+  pkgs,
+  awww,
+  ...
+}:
 
 let
   system = pkgs.stdenv.hostPlatform.system;
@@ -37,7 +42,18 @@ let
 
   wofiEmojiScript = pkgs.writeScriptBin "wofi-emoji" ''
     #!${pkgs.bash}/bin/bash
-    PATH="${pkgs.lib.makeBinPath (with pkgs; [ wofi wtype wl-clipboard coreutils gnused ])}:$PATH"
+    PATH="${
+      pkgs.lib.makeBinPath (
+        with pkgs;
+        [
+          wofi
+          wtype
+          wl-clipboard
+          coreutils
+          gnused
+        ]
+      )
+    }:$PATH"
     export PATH
     ${builtins.readFile ../../scripts/wofi-emoji}
   '';
