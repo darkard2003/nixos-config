@@ -140,6 +140,12 @@ if pgrep -x "kitty" &>/dev/null; then
     log "INFO" "Kitty terminal reloaded (SIGUSR1)."
 fi
 
+if command -v tmux &>/dev/null && pgrep -x "tmux" &>/dev/null; then
+    tmux source-file "$HOME/.config/tmux/tmux.conf" 2>/dev/null || true
+    tmux source-file "$HOME/.cache/wallust/colors-tmux.conf" 2>/dev/null || true
+    log "INFO" "Tmux status bar reloaded."
+fi
+
 # Step 6: Generate blurred lockscreen image for swaylock
 log "INFO" "Generating blurred lockscreen background via ImageMagick..."
 mkdir -p "$HOME/.cache/wallust"

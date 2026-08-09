@@ -98,6 +98,15 @@
       bold_is_bright = true;
       allow_remote_control = "yes";
     };
+    quickAccessTerminalConfig = {
+      background_opacity = 0.85;
+      margin_left = 10;
+      margin_right = 10;
+      margin_top = 10;
+      margin_bottom = 10;
+
+      lines = 15;
+    };
     extraConfig = ''
       include ~/.cache/wallust/colors-kitty.conf
     '';
@@ -120,7 +129,6 @@
     terminal = "tmux-256color";
 
     plugins = with pkgs.tmuxPlugins; [
-      catppuccin
       yank
       resurrect
       continuum
@@ -142,8 +150,6 @@
       bind k select-pane -U
       bind l select-pane -R
 
-      set -g status-style bg=default
-
       set -g allow-rename off
 
       set-option -g status-position top
@@ -159,9 +165,8 @@
       bind -r K resize-pane -U 5
       bind -r L resize-pane -R 5
 
-      set -g status-left ""
-      set -g status-right '#[fg=#{@thm_crust},bg=#{@thm_teal}] session: #S '
-      set -g status-right-length 100
+      # Wallust dynamic colors
+      if-shell '[ -f ~/.cache/wallust/colors-tmux.conf ]' 'source-file ~/.cache/wallust/colors-tmux.conf'
 
       # Kitty image protocol
       set -gq allow-passthrough on
@@ -177,6 +182,13 @@
       bind g display-popup -d '#{pane_current_path}' -w 80% -h 80% -E 'lazygit'
     '';
 
+  };
+
+  programs.mpv = {
+    enable = true;
+    scripts = [
+      pkgs.mpvScripts.mpris
+    ];
   };
 
   programs.home-manager.enable = true;

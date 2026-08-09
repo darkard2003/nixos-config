@@ -20,7 +20,7 @@
       "cpu",
       "disk",
       "temperature",
-      "custom/media"
+      "mpris"
     ],
     "modules-center": [
       "sway/workspaces",

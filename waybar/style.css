@@ -38,8 +38,18 @@ window#waybar {
     padding: 3px 10px;
 }
 
+.modules-left {
+    margin-right: 16px;
+}
+
 .modules-center {
     padding: 3px 8px;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+.modules-right {
+    margin-left: 16px;
 }
 
 /* Workspaces */
@@ -100,6 +110,7 @@ window#waybar {
 #custom-nix,
 #custom-weather,
 #custom-media,
+#mpris,
 #custom-pi-indicator,
 #bluetooth,
 #tray,
@@ -146,7 +157,8 @@ window#waybar {
     color: @foreground;
 }
 
-#custom-media {
+#custom-media,
+#mpris {
     color: @color5;
 }
 

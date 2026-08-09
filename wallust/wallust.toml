@@ -12,3 +12,5 @@ swaylock = { src = "swaylock-config", target = "~/.cache/wallust/swaylock-config
 wofi = { src = "colors-waybar.css", target = "~/.cache/wallust/colors-wofi.css" }
 shell = { src = "colors.sh", target = "~/.cache/wallust/colors.sh" }
 wob = { src = "wob.ini", target = "~/.cache/wallust/wob.ini" }
+tmux = { src = "colors-tmux.conf", target = "~/.cache/wallust/colors-tmux.conf" }
+nvim = { src = "colors-wallust.lua", target = "~/.cache/wallust/colors-wallust.lua" }
