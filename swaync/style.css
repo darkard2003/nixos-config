@@ -1,29 +1,39 @@
 /* Fallback Default Theme Colors */
-@define-color background #1e1e2e;
-@define-color foreground #cdd6f4;
-@define-color color0 #1e1e2e;
-@define-color color1 #f38ba8;
-@define-color color2 #a6e3a1;
-@define-color color3 #f9e2af;
-@define-color color4 #89b4fa;
-@define-color color5 #f5c2e7;
-@define-color color6 #94e2d5;
-@define-color color7 #bac2de;
-@define-color color8 #585b70;
+:root {
+  --background: #1e1e2e;
+  --foreground: #cdd6f4;
+  --cursor: #cdd6f4;
+  --color0: #1e1e2e;
+  --color1: #f38ba8;
+  --color2: #a6e3a1;
+  --color3: #f9e2af;
+  --color4: #89b4fa;
+  --color5: #f5c2e7;
+  --color6: #94e2d5;
+  --color7: #bac2de;
+  --color8: #585b70;
+  --color9: #f38ba8;
+  --color10: #a6e3a1;
+  --color11: #f9e2af;
+  --color12: #89b4fa;
+  --color13: #f5c2e7;
+  --color14: #94e2d5;
+  --color15: #a6adc8;
+}
 
 /* Dynamic Wallust Theme */
 @import url("file:///home/dark/.cache/wallust/colors.css");
 
 :root {
-  --cc-bg: rgba(14, 15, 13, 0.78);
-  --noti-border-color: rgba(255, 255, 255, 0.12);
-  --noti-bg: rgba(30, 32, 28, 0.94);
+  --cc-bg: alpha(var(--background), 0.85);
+  --noti-border-color: alpha(var(--color8), 0.35);
+  --noti-bg: alpha(var(--color0), 0.94);
   --noti-bg-alpha: 0.85;
-  --noti-bg-darker: rgba(14, 15, 13, 0.9);
-  --noti-bg-hover: rgba(45, 48, 42, 0.96);
-  --noti-bg-focus: rgba(55, 58, 52, 0.96);
+  --noti-bg-darker: alpha(var(--background), 0.92);
+  --noti-bg-hover: alpha(var(--color8), 0.4);
+  --noti-bg-focus: alpha(var(--color8), 0.6);
   --noti-bg-alt: var(--color0);
-  --noti-close-bg: rgba(255, 255, 255, 0.1);
+  --noti-close-bg: alpha(var(--foreground), 0.1);
   --noti-close-bg-hover: var(--color4);
   --text-color: var(--foreground);
   --text-color-disabled: var(--color8);

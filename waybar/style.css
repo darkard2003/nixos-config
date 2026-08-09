@@ -1,6 +1,7 @@
 /* Fallback Default Theme Colors (Used if Wallust is not run yet) */
 @define-color background #1e1e2e;
 @define-color foreground #cdd6f4;
+@define-color cursor #cdd6f4;
 @define-color color0 #1e1e2e;
 @define-color color1 #f38ba8;
 @define-color color2 #a6e3a1;
@@ -10,6 +11,13 @@
 @define-color color6 #94e2d5;
 @define-color color7 #bac2de;
 @define-color color8 #585b70;
+@define-color color9 #f38ba8;
+@define-color color10 #a6e3a1;
+@define-color color11 #f9e2af;
+@define-color color12 #89b4fa;
+@define-color color13 #f5c2e7;
+@define-color color14 #94e2d5;
+@define-color color15 #a6adc8;
 
 /* Dynamic Wallust Theme (Overrides default fallbacks when generated) */
 @import url("file:///home/dark/.cache/wallust/colors-waybar.css");

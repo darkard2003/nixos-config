@@ -104,52 +104,20 @@ if ! awww img "$wallpaper_path" --transition-type wipe --transition-angle 45 --t
 fi
 
 
-# Step 6: Run Wallust color palette generation
-log "INFO" "Generating multi-tool color palettes via Wallust..."
+# Step 5: Run Wallust color palette generation and live UI hooks
+log "INFO" "Generating multi-tool color palettes and triggering UI hooks via Wallust..."
 if ! wallust run -d "$CONFIG_DIR/wallust" "$wallpaper_path" >>"$LOG_FILE" 2>&1; then
     log "ERROR" "Wallust palette generation failed for image: $wallpaper_path"
     exit 1
 fi
 
-log "INFO" "Wallust color palette generated successfully."
+log "INFO" "Wallust color palette generated and UI hooks executed successfully."
 
-# Step 6: Live reload UI components
-log "INFO" "Reloading UI components with new color palette..."
-
-if command -v swaymsg &>/dev/null && [ -n "${WAYLAND_DISPLAY:-}" ]; then
-    if swaymsg reload >>"$LOG_FILE" 2>&1; then
-        log "INFO" "Sway window manager reloaded."
-    else
-        log "WARN" "swaymsg reload skipped."
-    fi
-fi
-
-if command -v swaync-client &>/dev/null; then
-    swaync-client -R >>"$LOG_FILE" 2>&1 || true
-    swaync-client -rs >>"$LOG_FILE" 2>&1 || true
-    log "INFO" "SwayNC notification daemon reloaded."
-fi
-
-if pgrep -x .waybar-wrapped &>/dev/null || pgrep -f "(^|/)waybar$" &>/dev/null; then
-    pkill -SIGUSR2 -x .waybar-wrapped 2>/dev/null || pkill -f -SIGUSR2 "(^|/)waybar$" 2>/dev/null || true
-    log "INFO" "Waybar status bar reloaded (SIGUSR2)."
-fi
-
-if pgrep -x "kitty" &>/dev/null; then
-    pkill -USR1 kitty 2>/dev/null || true
-    log "INFO" "Kitty terminal reloaded (SIGUSR1)."
-fi
-
-if command -v tmux &>/dev/null && pgrep -x "tmux" &>/dev/null; then
-    tmux source-file "$HOME/.config/tmux/tmux.conf" 2>/dev/null || true
-    tmux source-file "$HOME/.cache/wallust/colors-tmux.conf" 2>/dev/null || true
-    log "INFO" "Tmux status bar reloaded."
-fi
-
-# Step 6: Generate blurred lockscreen image for swaylock
+# Step 7: Generate blurred lockscreen image for swaylock
 log "INFO" "Generating blurred lockscreen background via ImageMagick..."
 mkdir -p "$HOME/.cache/wallust"
 magick "$wallpaper_path" -filter Gaussian -resize 20% -define filter:sigma=10.0 -modulate 90,100,100 -resize 2560x1600! "$HOME/.cache/wallust/lockscreen_blur.png" >>"$LOG_FILE" 2>&1 || true
 
 log "SUCCESS" "Wallpaper and theme color palettes updated successfully!"
+
 

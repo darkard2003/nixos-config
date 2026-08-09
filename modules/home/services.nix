@@ -15,7 +15,10 @@
   services.cliphist.enable = true;
 
   services.kanshi.enable = true;
-  services.kdeconnect.enable = true;
+  services.kdeconnect = {
+    enable = true;
+    indicator = true;
+  };
 
   services.swayidle = {
     enable = true;
