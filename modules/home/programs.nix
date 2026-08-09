@@ -1,6 +1,12 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  ...
+}:
 
 {
+  programs.imv.enable = true;
+
   programs.neovim = {
     enable = true;
     sideloadInitLua = true;
@@ -16,11 +22,19 @@
       fd
     ];
   };
+
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
     enableZshIntegration = true;
     enableBashIntegration = true;
+    silent = true;
+    mise.enable = true;
+  };
+
+  programs.mise = {
+    enable = true;
+    enableZshIntegration = true;
   };
 
   programs.fzf = {

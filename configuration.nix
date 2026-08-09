@@ -34,6 +34,7 @@
       "input"
       "uinput"
       "libvirtd"
+      "kvm"
     ];
     packages = with pkgs; [
       tree

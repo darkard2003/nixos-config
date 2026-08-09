@@ -22,6 +22,21 @@
   programs.firefox.enable = true;
   programs.kdeconnect.enable = true;
 
+  programs.thunar = {
+    enable = true;
+
+    plugins = with pkgs; [
+      thunar-archive-plugin
+      thunar-volman
+    ];
+  };
+
+  programs.xfconf.enable = true;
+  services.gvfs.enable = true;
+  services.tumbler.enable = true;
+  services.avahi.enable = true;
+  services.samba-wsdd.enable = true;
+
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [

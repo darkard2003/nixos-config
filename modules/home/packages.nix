@@ -11,6 +11,7 @@ let
 in
 {
   home.packages = with pkgs; [
+    sequoia-chameleon-gnupg
     zed-editor
     wofi
     ripgrep
@@ -33,12 +34,12 @@ in
     playerctl
     brightnessctl
     pulseaudio
-    thunar
     fastfetch
     pavucontrol
     remmina
     dbeaver-bin
     rustdesk-flutter
+    cifs-utils
 
     # Utilities & Script dependencies
     bc

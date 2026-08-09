@@ -2,10 +2,10 @@
   description = "System and Home Manager Flake";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-26.05";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     antigravity-nix = {
@@ -16,7 +16,6 @@
       url = "git+https://codeberg.org/LGFae/awww";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     nix-index-database = {
@@ -71,9 +70,9 @@
               inherit
                 self
                 username
-                antigravity-nix
                 awww
                 inputs
+                antigravity-nix
                 ;
             };
             home-manager.users.${username} = {
