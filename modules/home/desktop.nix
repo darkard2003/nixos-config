@@ -1,5 +1,4 @@
 {
-  self,
   config,
   pkgs,
   awww,
@@ -125,8 +124,22 @@ in
 
   qt = {
     enable = true;
-    platformTheme.name = "adwaita";
-    style.name = "adwaita-dark";
+    platformTheme.name = "kde";
+    style = {
+      name = "breeze";
+      package = pkgs.kdePackages.breeze;
+    };
+    kde.settings = {
+      kdeglobals = {
+        General = {
+          ColorScheme = "BreezeDark";
+          name = "BreezeDark";
+        };
+        KDE = {
+          LookAndFeelPackage = "org.kde.breezedark.desktop";
+        };
+      };
+    };
   };
 
   home.sessionPath = [

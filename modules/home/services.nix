@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   services.swaync.enable = true;
@@ -42,8 +42,6 @@
     enable = true;
     pinentry.package = pkgs.pinentry-curses;
     enableZshIntegration = true;
-    defaultCacheTtl = 28800; # 8 hours
-    maxCacheTtl = 86400; # 24 hours
   };
 
 }

@@ -1,5 +1,4 @@
 {
-  config,
   pkgs,
   antigravity-nix,
   awww,
@@ -40,6 +39,11 @@ in
     dbeaver-bin
     rustdesk-flutter
     cifs-utils
+    kdePackages.breeze
+    kdePackages.breeze-icons
+    kdePackages.qqc2-desktop-style
+    kdePackages.plasma-integration
+    kdePackages.kcolorscheme
 
     # Utilities & Script dependencies
     bc
