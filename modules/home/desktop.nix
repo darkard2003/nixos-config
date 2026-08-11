@@ -1,19 +1,16 @@
 {
   config,
   pkgs,
-  awww,
+  self,
   ...
 }:
 
 let
-  system = pkgs.stdenv.hostPlatform.system;
-  dotfiles = "${config.home.homeDirectory}/nixos-config";
-
   wallpaperScript = pkgs.writeShellApplication {
     name = "wallpaper";
     runtimeInputs = with pkgs; [
-      awww.packages.${system}.default
       wallust
+      awww
       wofi
       imagemagick
       sway
@@ -80,6 +77,22 @@ let
   };
 in
 {
+  wayland.windowManager.sway = {
+    enable = true;
+    package = pkgs.swayfx;
+
+    wrapperFeatures.gtk = true;
+    systemd.xdgAutostart = true;
+
+    checkConfig = false;
+
+    config = null;
+
+    extraConfig = ''
+      include ${self}/sway/config
+    '';
+  };
+
   home.packages = [
     wallpaperScript
     screenshotScript
@@ -87,6 +100,7 @@ in
     mirrorScript
     noteScript
   ];
+
   home.pointerCursor = {
     name = "Vimix-cursors";
     enable = true;
@@ -147,14 +161,13 @@ in
   ];
 
   xdg.configFile = {
-    "sway".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/sway";
-    "waybar".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/waybar";
-    "wofi".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/wofi";
-    "swaync".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/swaync";
-    "swaylock".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/swaylock";
-    "wallust".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/wallust";
-    "wob".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/wob";
-    "nvim".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/nvim";
+    "waybar".source = config.lib.file.mkOutOfStoreSymlink "${self}/waybar";
+    "wofi".source = config.lib.file.mkOutOfStoreSymlink "${self}/wofi";
+    "swaync".source = config.lib.file.mkOutOfStoreSymlink "${self}/swaync";
+    "swaylock".source = config.lib.file.mkOutOfStoreSymlink "${self}/swaylock";
+    "wallust".source = config.lib.file.mkOutOfStoreSymlink "${self}/wallust";
+    "wob".source = config.lib.file.mkOutOfStoreSymlink "${self}/wob";
+    "nvim".source = config.lib.file.mkOutOfStoreSymlink "${self}/nvim";
   };
 
   # home.file.".local/bin" = {

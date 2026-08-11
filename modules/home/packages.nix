@@ -1,7 +1,6 @@
 {
   pkgs,
   antigravity-nix,
-  awww,
   ...
 }:
 
@@ -25,7 +24,6 @@ in
     antigravity-nix.packages.${system}.default
     antigravity-nix.packages.${system}.google-antigravity-ide
     antigravity-nix.packages.${system}.google-antigravity-cli
-    awww.packages.${system}.default
     wallust
     dex
     wob

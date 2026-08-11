@@ -14,11 +14,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    awww = {
-      url = "git+https://codeberg.org/LGFae/awww";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     nix-index-database = {
@@ -39,7 +34,6 @@
       nixpkgs,
       home-manager,
       antigravity-nix,
-      awww,
       nix-index-database,
       zen-browser,
       ...
@@ -73,7 +67,6 @@
               inherit
                 self
                 username
-                awww
                 inputs
                 antigravity-nix
                 ;

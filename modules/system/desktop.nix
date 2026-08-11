@@ -28,6 +28,8 @@
     wrapperFeatures.gtk = true;
   };
 
+  xdg.autostart.enable = true;
+
   # XDG Desktop Portals
   xdg.portal = {
     enable = true;
