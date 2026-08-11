@@ -12,6 +12,7 @@
     ./modules/home/packages.nix
     ./modules/home/shell.nix
     ./modules/home/desktop.nix
+    ./modules/home/sway.nix
     ./modules/home/programs.nix
     ./modules/home/services.nix
   ];
