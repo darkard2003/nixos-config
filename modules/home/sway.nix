@@ -5,6 +5,7 @@
 }:
 
 {
+  wayland.systemd.target = "sway-session.target";
   wayland.windowManager.sway = {
     enable = true;
     package = pkgs.swayfx;

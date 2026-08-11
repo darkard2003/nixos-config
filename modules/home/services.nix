@@ -47,17 +47,4 @@
     pinentry.package = pkgs.pinentry-curses;
     enableZshIntegration = true;
   };
-  programs.keepassxc = {
-    enable = true;
-    settings = {
-      # Config keys map to https://github.com/keepassxreboot/keepassxc/blob/develop/src/core/Config.cpp
-      General = {
-        StartMinimized = true;
-        ShowTrayIcon = true;
-      };
-      FdoSecrets = {
-        Enabled = true; # Enable Secret Service (org.freedesktop.secrets) Integration
-      };
-    };
-  };
 }

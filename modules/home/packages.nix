@@ -9,6 +9,7 @@ let
 in
 {
   home.packages = with pkgs; [
+    keepassxc
     sequoia-chameleon-gnupg
     zed-editor
     wofi
