@@ -42,6 +42,11 @@
     };
   };
 
+  services.syncthing = {
+    enable = true;
+    openDefaultPorts = true;
+  };
+
   services.gpg-agent = {
     enable = true;
     pinentry.package = pkgs.pinentry-curses;
