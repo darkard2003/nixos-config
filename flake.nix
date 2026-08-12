@@ -40,45 +40,51 @@
     }@inputs:
     let
       username = "dark";
-      hostname = "dark-nix";
+
+      mkHost =
+        hostname: hardwareConfig:
+        nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit
+              self
+              username
+              hostname
+              inputs
+              zen-browser
+              ;
+          };
+
+          modules = [
+            hardwareConfig
+            ./configuration.nix
+
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "backup";
+              home-manager.extraSpecialArgs = {
+                inherit
+                  self
+                  username
+                  inputs
+                  antigravity-nix
+                  ;
+              };
+              home-manager.users.${username} = {
+                imports = [
+                  nix-index-database.homeModules.nix-index
+                  ./home.nix
+                ];
+              };
+            }
+          ];
+        };
     in
     {
-      nixosConfigurations.${hostname} = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit
-            self
-            username
-            hostname
-            inputs
-            zen-browser
-            ;
-        };
-
-        modules = [
-          ./hardware-configuration.nix
-          ./configuration.nix
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = {
-              inherit
-                self
-                username
-                inputs
-                antigravity-nix
-                ;
-            };
-            home-manager.users.${username} = {
-              imports = [
-                nix-index-database.homeModules.nix-index
-                ./home.nix
-              ];
-            };
-          }
-        ];
+      nixosConfigurations = {
+        dark-think = mkHost "dark-think" ./hosts/dark-think/hardware-configuration.nix;
+        dark-nix = mkHost "dark-nix" ./hosts/dark-nix/hardware-configuration.nix;
       };
     };
 }
