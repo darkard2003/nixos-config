@@ -111,6 +111,7 @@ window#waybar {
 #memory,
 #disk,
 #temperature,
+#custom-temperature,
 #backlight,
 #network,
 #pulseaudio,
@@ -149,11 +150,13 @@ window#waybar {
     color: @color6;
 }
 
-#temperature {
+#temperature,
+#custom-temperature {
     color: @color5;
 }
 
-#temperature.critical {
+#temperature.critical,
+#custom-temperature.critical {
     color: @color1;
 }
 

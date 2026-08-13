@@ -76,11 +76,10 @@
   "memory": {
     "format": "{}% "
   },
-  "temperature": {
-    "thermal-zone": 0,
-    "critical-threshold": 80,
-    "format": "{temperatureC}°C {icon}",
-    "format-icons": ["", "", ""]
+  "custom/temperature": {
+    "exec": "python3 $HOME/nixos-config/waybar/scripts/get-temp.py",
+    "return-type": "json",
+    "tooltip": true
   },
   "backlight": {
     "format": "{percent}% {icon}",

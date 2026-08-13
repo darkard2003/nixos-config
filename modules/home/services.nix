@@ -44,7 +44,7 @@
 
   services.syncthing = {
     enable = true;
-    openDefaultPorts = true;
+    # openDefaultPorts = true;
   };
 
   services.gpg-agent = {

@@ -19,7 +19,7 @@
       "memory",
       "cpu",
       "disk",
-      "temperature",
+      "custom/temperature",
       "mpris"
     ],
     "modules-center": [

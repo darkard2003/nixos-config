@@ -5,10 +5,10 @@
 
 {
   home.shellAliases = {
-    nswitch = "sudo nixos-rebuild switch --flake ~/nixos-config#$(hostname)";
-    nbuild = "sudo nixos-rebuild build --flake ~/nixos-config#$(hostname)";
-    nboot = "sudo nixos-rebuild boot --flake ~/nixos-config#$(hostname)";
-    ntest = "nix build ~/nixos-config#nixosConfigurations.$(hostname).config.system.build.toplevel --dry-run";
+    nswitch = "sudo nixos-rebuild switch --flake ~/nixos-config'#'$(hostname)";
+    nbuild = "sudo nixos-rebuild build --flake ~/nixos-config'#'$(hostname)";
+    nboot = "sudo nixos-rebuild boot --flake ~/nixos-config'#'$(hostname)";
+    ntest = "nix build ~/nixos-config'#'nixosConfigurations.$(hostname).config.system.build.toplevel --dry-run";
     nclean = "sudo nix-collect-garbage -d && nix-collect-garbage -d";
     ".." = "cd ..";
     "..." = "cd ../..";
