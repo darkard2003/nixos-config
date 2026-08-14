@@ -9,6 +9,7 @@ let
 in
 {
   home.packages = with pkgs; [
+    qutebrowser
     keepassxc
     sequoia-chameleon-gnupg
     zed-editor

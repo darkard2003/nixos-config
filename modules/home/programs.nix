@@ -231,9 +231,9 @@
     };
   };
 
-  programs.qutebrowser = {
-    enable = true;
-  };
+  # programs.qutebrowser = {
+  #   enable = true;
+  # };
 
   programs.home-manager.enable = true;
 }

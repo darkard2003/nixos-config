@@ -152,6 +152,7 @@ in
     "wallust".source = config.lib.file.mkOutOfStoreSymlink "${self}/wallust";
     "wob".source = config.lib.file.mkOutOfStoreSymlink "${self}/wob";
     "nvim".source = config.lib.file.mkOutOfStoreSymlink "${self}/nvim";
+    "qutebrowser".source = config.lib.file.mkOutOfStoreSymlink "${self}/qutebrowser";
   };
 
   # home.file.".local/bin" = {
