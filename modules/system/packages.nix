@@ -14,6 +14,7 @@
     silicon
     fontconfig
     tailscale
+    gcr
     zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 

@@ -49,7 +49,7 @@
 
   services.gpg-agent = {
     enable = true;
-    pinentry.package = pkgs.pinentry-curses;
+    pinentry.package = pkgs.pinentry-gnome3;
     enableZshIntegration = true;
   };
 }
