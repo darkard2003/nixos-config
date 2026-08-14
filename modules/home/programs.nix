@@ -185,9 +185,50 @@
 
   programs.mpv = {
     enable = true;
-    scripts = [
-      pkgs.mpvScripts.mpris
+    scripts = with pkgs.mpvScripts; [
+      mpris
+      uosc # Modern minimalist UI
+      thumbfast # Video timeline preview thumbnails
+      autosubsync-mpv # Automatic subtitle timing synchronization
+      sponsorblock # Auto-skip sponsors via yt-dlp
+      quality-menu # On-the-fly resolution switcher
     ];
+
+    config = {
+      # Video Quality & Smooth Motion
+      profile = "high-quality";
+      hwdec = "auto-safe";
+      video-sync = "display-resample";
+      interpolation = true;
+
+      # Window & Playback Behavior
+      keep-open = "yes";
+      save-position-on-quit = true;
+      autofit = "70%";
+
+      # Language Priorities & Subtitles
+      alang = "eng,en,jpn,ja";
+      slang = "eng,en";
+      sub-auto = "fuzzy";
+      audio-file-auto = "fuzzy";
+      sub-font-size = 46;
+      sub-border-size = 2.5;
+      sub-shadow-offset = 1;
+
+      # UI Integration for uosc
+      osc = false;
+      osd-bar = false;
+
+      # Streaming & Screenshots
+      ytdl-format = "bestvideo[height<=?1080]+bestaudio/best";
+      screenshot-directory = "~/Pictures/mpv";
+    };
+    bindings = {
+      WHEEL_UP = "add volume 2";
+      WHEEL_DOWN = "add volume -2";
+      "Shift+g" = "add sub-scale +0.1";
+      "Shift+f" = "add sub-scale -0.1";
+    };
   };
 
   programs.home-manager.enable = true;

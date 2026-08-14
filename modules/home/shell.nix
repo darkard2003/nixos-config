@@ -1,5 +1,4 @@
 {
-  username,
   ...
 }:
 
@@ -12,6 +11,7 @@
     nclean = "sudo nix-collect-garbage -d && nix-collect-garbage -d";
     ".." = "cd ..";
     "..." = "cd ../..";
+    open = "xdg-open";
     ls = "ls --color=auto";
     ll = "ls -lha";
     la = "ls -A";
