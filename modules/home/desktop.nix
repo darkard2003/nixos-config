@@ -1,11 +1,12 @@
 {
   config,
   pkgs,
-  self,
   ...
 }:
 
 let
+  dotfiles = "${config.home.homeDirectory}/nixos-config";
+
   wallpaperScript = pkgs.writeShellApplication {
     name = "wallpaper";
     runtimeInputs = with pkgs; [
@@ -122,7 +123,7 @@ in
 
   qt = {
     enable = true;
-    platformTheme.name = "kde";
+    platformTheme.name = "qt6ct";
     style = {
       name = "breeze";
       package = pkgs.kdePackages.breeze;
@@ -145,14 +146,13 @@ in
   ];
 
   xdg.configFile = {
-    "waybar".source = config.lib.file.mkOutOfStoreSymlink "${self}/waybar";
-    "wofi".source = config.lib.file.mkOutOfStoreSymlink "${self}/wofi";
-    "swaync".source = config.lib.file.mkOutOfStoreSymlink "${self}/swaync";
-    "swaylock".source = config.lib.file.mkOutOfStoreSymlink "${self}/swaylock";
-    "wallust".source = config.lib.file.mkOutOfStoreSymlink "${self}/wallust";
-    "wob".source = config.lib.file.mkOutOfStoreSymlink "${self}/wob";
-    "nvim".source = config.lib.file.mkOutOfStoreSymlink "${self}/nvim";
-    "qutebrowser".source = config.lib.file.mkOutOfStoreSymlink "${self}/qutebrowser";
+    "waybar".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/waybar";
+    "wofi".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/wofi";
+    "swaync".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/swaync";
+    "swaylock".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/swaylock";
+    "wallust".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/wallust";
+    "wob".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/wob";
+    "nvim".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/nvim";
   };
 
   # home.file.".local/bin" = {

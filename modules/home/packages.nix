@@ -9,11 +9,13 @@ let
 in
 {
   home.packages = with pkgs; [
+    rofi
     qutebrowser
     keepassxc
     sequoia-chameleon-gnupg
     zed-editor
     wofi
+    cheese
     ripgrep
     grim
     slurp

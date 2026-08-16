@@ -95,11 +95,6 @@
     };
   };
 
-  # services.udev.extraRules = ''
-  #   # Disable wakeup on USB devices to prevent external mouse/keyboard from waking system
-  #   ACTION=="add", SUBSYSTEM=="usb", ATTR{power/wakeup}="disabled"
-  # '';
-
   services.flatpak = {
     enable = true;
     remotes = [
