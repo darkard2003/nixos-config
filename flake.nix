@@ -42,7 +42,7 @@
       username = "dark";
 
       mkHost =
-        hostname: hardwareConfig:
+        hostname: hostModule:
         nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit
@@ -55,7 +55,7 @@
           };
 
           modules = [
-            hardwareConfig
+            hostModule
             ./configuration.nix
 
             home-manager.nixosModules.home-manager
@@ -83,8 +83,8 @@
     in
     {
       nixosConfigurations = {
-        dark-think = mkHost "dark-think" ./hosts/dark-think/hardware-configuration.nix;
-        dark-nix = mkHost "dark-nix" ./hosts/dark-nix/hardware-configuration.nix;
+        dark-think = mkHost "dark-think" ./hosts/dark-think;
+        dark-nix = mkHost "dark-nix" ./hosts/dark-nix;
       };
     };
 }

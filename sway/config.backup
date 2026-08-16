@@ -1,7 +1,0 @@
-include keybinds.conf
-include rules.conf
-include theme.conf
-include autostart.conf
-include custom.d/*.conf
-
-xwayland enable

@@ -106,7 +106,7 @@ fi
 
 # Step 5: Run Wallust color palette generation and live UI hooks
 log "INFO" "Generating multi-tool color palettes and triggering UI hooks via Wallust..."
-if ! wallust run -d "$CONFIG_DIR/wallust" "$wallpaper_path" >>"$LOG_FILE" 2>&1; then
+if ! wallust run -d "$CONFIG_DIR/dotfiles/wallust" "$wallpaper_path" >>"$LOG_FILE" 2>&1; then
     log "ERROR" "Wallust palette generation failed for image: $wallpaper_path"
     exit 1
 fi

@@ -1,7 +1,10 @@
 #!/bin/bash
 
-# Configuration
-WALLPAPER_DIR="../wallpapers" # Your wallpaper directory
+CONFIG_DIR="${CONFIG_DIR:-$HOME/nixos-config}"
+WALLPAPER_DIR="${WALLPAPER_DIR:-$CONFIG_DIR/wallpapers}"
+if [ ! -d "$WALLPAPER_DIR" ]; then
+    WALLPAPER_DIR="$HOME/Pictures/wallpapers"
+fi
 THUMB_DIR="$HOME/.cache/wal_thumbs"      # Cache directory for thumbnails
 THUMB_SIZE="128x128"                     # Thumbnail size (e.g., 128x128 pixels)
 

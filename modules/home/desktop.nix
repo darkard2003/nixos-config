@@ -5,7 +5,7 @@
 }:
 
 let
-  dotfiles = "${config.home.homeDirectory}/nixos-config";
+  dotfiles = "${config.home.homeDirectory}/nixos-config/dotfiles";
 
   wallpaperScript = pkgs.writeShellApplication {
     name = "wallpaper";

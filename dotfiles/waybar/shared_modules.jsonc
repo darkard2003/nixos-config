@@ -77,7 +77,7 @@
     "format": "{}% "
   },
   "custom/temperature": {
-    "exec": "python3 $HOME/nixos-config/waybar/scripts/get-temp.py",
+    "exec": "python3 $HOME/.config/waybar/scripts/get-temp.py",
     "return-type": "json",
     "tooltip": true
   },

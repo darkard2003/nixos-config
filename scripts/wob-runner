@@ -14,7 +14,10 @@ mkfifo "$WOBSOCK"
 # Locate config file (wallust generated or default)
 CONFIG_FILE="$HOME/.cache/wallust/wob.ini"
 if [ ! -f "$CONFIG_FILE" ]; then
-    CONFIG_FILE="$HOME/nixos-config/wob/wob.ini"
+    CONFIG_FILE="$HOME/.config/wob/wob.ini"
+fi
+if [ ! -f "$CONFIG_FILE" ]; then
+    CONFIG_FILE="$HOME/nixos-config/dotfiles/wob/wob.ini"
 fi
 
 # Run tail piped into wob

@@ -16,7 +16,7 @@
     config = null;
 
     extraConfig = ''
-      include ${self}/sway/config
+      include ${self}/dotfiles/sway/config
     '';
   };
 }
