@@ -80,6 +80,23 @@
       targets = [ "sway-session.target" ];
     };
   };
+
+  systemd.user.services.waybar = {
+    Unit = {
+      Before = [ "tray.target" ];
+    };
+    Service = {
+      Type = "dbus";
+      BusName = "fr.arouillard.waybar";
+    };
+  };
+
+  xdg.configFile."systemd/user/app-@autostart.service.d/order.conf".text = ''
+    [Unit]
+    After=tray.target waybar.service
+    Wants=tray.target
+  '';
+
   programs.kitty = {
     enable = true;
     font = {

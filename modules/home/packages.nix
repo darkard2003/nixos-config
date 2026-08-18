@@ -52,6 +52,7 @@ in
     jq
     imagemagick
     bluetui
+    handlr
 
     # Neovim & Mason runtime dependencies
     unzip

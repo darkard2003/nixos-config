@@ -72,10 +72,21 @@
             k (tap-hold-release $tap-time $hold-time k rctl)
             l (tap-hold-release $tap-time $hold-time l rsft)
             ; (tap-hold-release $tap-time $hold-time ; ralt)
+
+            to-game (layer-switch game)
+            to-base (layer-switch base)
+
+            ;; Double-tap CapsLock to toggle layer; single tap sends Escape
+            c-base (tap-dance 200 (esc @to-game))
+            c-game (tap-dance 200 (esc @to-base))
           )
 
           (deflayer base
-            esc @a  @s  @d  @f  @j  @k  @l  @;
+            @c-base @a  @s  @d  @f  @j  @k  @l  @;
+          )
+
+          (deflayer game
+            @c-game a   s   d   f   j   k   l   ;
           )
         '';
       };
@@ -104,6 +115,8 @@
       }
     ];
     packages = [
+      "com.usebottles.bottles"
+      "moe.launcher.an-anime-game-launcher"
     ];
   };
 }
