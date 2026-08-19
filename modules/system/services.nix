@@ -100,8 +100,8 @@
       Login = {
         HandleLidSwitch = "suspend";
         HandleLidSwitchExternalPower = "suspend";
-        HandleLidSwitchDocked = "suspend";
-        LidSwitchIgnoreInhibited = "yes";
+        HandleLidSwitchDocked = "ignore";
+        LidSwitchIgnoreInhibited = "no";
       };
     };
   };
