@@ -115,13 +115,13 @@
       allow_remote_control = "yes";
     };
     quickAccessTerminalConfig = {
-      background_opacity = 0.85;
+      background_opacity = 0.95;
       margin_left = 10;
       margin_right = 10;
       margin_top = 10;
       margin_bottom = 10;
-
       lines = 15;
+      background_blur = 20;
     };
     extraConfig = ''
       include ~/.cache/wallust/colors-kitty.conf

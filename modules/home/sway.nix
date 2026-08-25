@@ -1,8 +1,12 @@
 {
   pkgs,
-  self,
+  config,
   ...
 }:
+
+let
+  dotfiles = "${config.home.homeDirectory}/nixos-config/dotfiles";
+in
 
 {
   wayland.systemd.target = "sway-session.target";
@@ -16,7 +20,7 @@
     config = null;
 
     extraConfig = ''
-      include ${self}/dotfiles/sway/config
+      include ${dotfiles}/sway/config
     '';
   };
 }
