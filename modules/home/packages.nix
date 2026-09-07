@@ -1,11 +1,19 @@
 {
   pkgs,
+  inputs,
   antigravity-nix,
   ...
 }:
 
 let
   system = pkgs.stdenv.hostPlatform.system;
+  pkgs-unfree = import inputs.nixpkgs {
+    inherit system;
+    config = {
+      allowUnfree = true;
+      android_sdk.accept_license = true;
+    };
+  };
 in
 {
   home.packages = with pkgs; [
@@ -46,6 +54,7 @@ in
     kdePackages.qqc2-desktop-style
     kdePackages.plasma-integration
     kdePackages.kcolorscheme
+    pkgs-unfree.android-studio
 
     # Utilities & Script dependencies
     bc
