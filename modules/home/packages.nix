@@ -55,6 +55,7 @@ in
     kdePackages.plasma-integration
     kdePackages.kcolorscheme
     pkgs-unfree.android-studio
+    brave-origin
 
     # Utilities & Script dependencies
     bc
