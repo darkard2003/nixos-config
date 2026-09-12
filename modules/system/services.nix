@@ -33,7 +33,11 @@
   programs.xfconf.enable = true;
   services.gvfs.enable = true;
   services.tumbler.enable = true;
-  services.avahi.enable = true;
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
   services.samba-wsdd.enable = true;
 
   programs.nix-ld = {
