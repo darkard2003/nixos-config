@@ -3,3 +3,5 @@ results/
 result-*
 *.log
 .cache
+__pycache__/
+*.py[cod]
