@@ -31,7 +31,6 @@
 
       defaultModel = "deepseek/deepseek-v4.1-flash";
 
-      # Token management
       compaction = {
         enabled = true;
         keepRecentTokens = 20000;
@@ -41,8 +40,6 @@
       theme = "dark";
     };
 
-    # bwrap for kernel-level sandboxing, socat for socket relays,
-    # ripgrep for search used by the sandbox hooks
     extraPackages = [
       pkgs.bubblewrap
       pkgs.socat
@@ -73,11 +70,6 @@
     enableBashIntegration = true;
     silent = true;
     mise.enable = true;
-  };
-
-  programs.mise = {
-    enable = true;
-    enableZshIntegration = true;
   };
 
   programs.fzf = {
