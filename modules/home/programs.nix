@@ -28,7 +28,7 @@
       ];
       defaultProvider = "openrouter";
 
-      defaultModel = "qwen/qwen3.8-flash:exacto";
+      defaultModel = "qwen/qwen3.8-flash";
 
       # Token management
       compaction = {
