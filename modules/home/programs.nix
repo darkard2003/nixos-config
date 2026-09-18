@@ -21,7 +21,14 @@
     enable = true;
     settings = {
       # pi packages to install at startup: plan mode, kernel sandboxing, context pruning
-      packages = [ "npm:pi-plan" "npm:pi-sandbox" "npm:pi-context-prune" ];
+      packages = [
+        "npm:pi-plan"
+        "npm:pi-sandbox"
+        "npm:pi-context-prune"
+      ];
+      defaultProvider = "openrouter";
+
+      defaultModel = "qwen/qwen3.8-flash:exacto";
 
       # Token management
       compaction = {
@@ -35,7 +42,11 @@
 
     # bwrap for kernel-level sandboxing, socat for socket relays,
     # ripgrep for search used by the sandbox hooks
-    extraPackages = [ pkgs.bubblewrap pkgs.socat pkgs.ripgrep ];
+    extraPackages = [
+      pkgs.bubblewrap
+      pkgs.socat
+      pkgs.ripgrep
+    ];
   };
 
   programs.neovim = {
