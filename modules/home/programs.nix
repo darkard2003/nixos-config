@@ -19,6 +19,23 @@
 
   programs.pi-coding-agent = {
     enable = true;
+    settings = {
+      # pi packages to install at startup: plan mode, kernel sandboxing, context pruning
+      packages = [ "npm:pi-plan" "npm:pi-sandbox" "npm:pi-context-prune" ];
+
+      # Token management
+      compaction = {
+        enabled = true;
+        keepRecentTokens = 20000;
+        reserveTokens = 16384;
+      };
+
+      theme = "dark";
+    };
+
+    # bwrap for kernel-level sandboxing, socat for socket relays,
+    # ripgrep for search used by the sandbox hooks
+    extraPackages = [ pkgs.bubblewrap pkgs.socat pkgs.ripgrep ];
   };
 
   programs.neovim = {
