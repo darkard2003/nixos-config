@@ -26,9 +26,10 @@
         "npm:pi-sandbox"
         "npm:pi-context-prune"
       ];
+
       defaultProvider = "openrouter";
 
-      defaultModel = "qwen/qwen3.8-flash";
+      defaultModel = "deepseek/deepseek-v4.1-flash";
 
       # Token management
       compaction = {
