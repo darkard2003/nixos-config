@@ -12,6 +12,7 @@
   services.openssh.enable = true;
   services.tailscale.enable = true;
   services.fstrim.enable = true;
+  services.envfs.enable = true;
 
   services.pipewire = {
     enable = true;

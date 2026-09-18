@@ -17,6 +17,10 @@
     ];
   };
 
+  programs.pi-coding-agent = {
+    enable = true;
+  };
+
   programs.neovim = {
     enable = true;
     sideloadInitLua = true;
