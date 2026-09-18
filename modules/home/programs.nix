@@ -69,7 +69,6 @@
     enableZshIntegration = true;
     enableBashIntegration = true;
     silent = true;
-    mise.enable = true;
   };
 
   programs.fzf = {
