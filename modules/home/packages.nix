@@ -17,8 +17,7 @@ let
 in
 {
   home.packages = with pkgs; [
-    rofi
-    qutebrowser
+    localsend
     keepassxc
     sequoia-chameleon-gnupg
     zed-editor
