@@ -40,6 +40,25 @@
       theme = "dark";
     };
 
+    models = {
+      providers = {
+        ollama = {
+          api = "openai-completions";
+          apiKey = "ollama";
+          baseUrl = "http://darkmac:11434/v1";
+          models = [
+            {
+              id = "qwen3.5-coder-mlx-32k";
+              name = "Qwen 3.5 9B (Local M4)";
+              reasoning = true;
+              maxTokens = 4096;
+              contextWindow = 32000;
+            }
+          ];
+        };
+      };
+    };
+
     extraPackages = [
       pkgs.bubblewrap
       pkgs.socat
