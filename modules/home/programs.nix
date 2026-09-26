@@ -171,7 +171,7 @@
       margin_top = 10;
       margin_bottom = 10;
       lines = 15;
-      background_blur = 20;
+      # background_blur = 20;
     };
     extraConfig = ''
       include ~/.cache/wallust/colors-kitty.conf
