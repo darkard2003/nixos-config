@@ -5,6 +5,14 @@
     ./hardware-configuration.nix
   ];
 
+  # NT Synchronization Driver (Wine / Proton in-kernel fast synchronization)
+  boot.kernelModules = [ "ntsync" ];
+
+  # Ensure /dev/ntsync has read/write permissions for unprivileged users
+  services.udev.extraRules = ''
+    KERNEL=="ntsync", MODE="0666"
+  '';
+
   # ThinkPad Power Management & Battery Thresholds
   services.tlp = {
     enable = true;
