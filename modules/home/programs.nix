@@ -55,8 +55,8 @@
               contextWindow = 32000;
             }
             {
-              id = "gemma4:e2b-mlx";
-              name = "gemma4 e2b";
+              id = "ornith-1.5:9b";
+              name = "Ornith 9b";
               reasoning = true;
               maxTokens = 4096;
               contextWindow = 32000;

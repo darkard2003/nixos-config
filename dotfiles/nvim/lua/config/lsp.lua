@@ -109,6 +109,11 @@ M.handler = function(server_name)
           autoSearchPaths = true,
           useLibraryCodeForTypes = true,
           diagnosticMode = "openFilesOnly",
+          diagnosticSeverityOverrides = {
+            reportUnusedImport = "none",
+            reportUnusedVariable = "none",
+            reportDuplicateImport = "none",
+          },
         },
       },
     }
