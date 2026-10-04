@@ -61,7 +61,7 @@ in
     jq
     imagemagick
     bluetui
-    handlr
+    (pkgs.handlr-regex.overrideAttrs (_: { doCheck = false; }))
 
     # Neovim & Mason runtime dependencies
     unzip
