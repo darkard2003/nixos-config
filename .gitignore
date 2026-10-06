@@ -18,3 +18,4 @@ result
 .gitconfig
 .mcp.json
 .ripgreprc
+.env
