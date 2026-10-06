@@ -26,6 +26,7 @@
     enable = true;
     package = pkgs.swayfx;
     wrapperFeatures.gtk = true;
+    extraPackages = [ ];
   };
 
   xdg.autostart.enable = true;
