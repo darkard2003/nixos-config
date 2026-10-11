@@ -17,7 +17,6 @@ let
 in
 {
   home.packages = with pkgs; [
-    localsend
     keepassxc
     sequoia-chameleon-gnupg
     zed-editor
@@ -61,7 +60,8 @@ in
     jq
     imagemagick
     bluetui
-    (pkgs.handlr-regex.overrideAttrs (_: { doCheck = false; }))
+    # (pkgs.handlr-regex.overrideAttrs (_: { doCheck = false; }))
+    handlr-regex
 
     # Neovim & Mason runtime dependencies
     unzip
