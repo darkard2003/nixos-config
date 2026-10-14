@@ -74,11 +74,7 @@ M.on_attach = function(client, buffer)
     })
   end
 
-  vim.api.nvim_create_autocmd("LspAttach", {
-    callback = function(ev)
-      vim.lsp.document_color.enable(true, { bufnr = ev.buf })
-    end,
-  })
+  vim.lsp.document_color.enable(true, { bufnr = buffer })
 end
 
 M.capabilities = require("cmp_nvim_lsp").default_capabilities()

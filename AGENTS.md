@@ -25,30 +25,30 @@ hosts/<host>/default.nix   # host-specific: TLP, Intel GPU, bluetooth, etc.
 hosts/<host>/hardware-configuration.nix  # auto-generated, do not hand-edit
 
 modules/system/
-  boot.nix                 # bootloader, kernel params, lanzaboote, Secure Boot
-  desktop.nix              # SwayFX system-wide (seatd, greetd, polkit, fontconfig)
-  packages.nix             # system packages
-  services.nix             # printing, avahi, syncthing, openssh, pipewire
-  virt.nix                 # libvirtd
-  zswap.nix                # zswap compression
+  boot.nix                 # systemd-boot, plymouth, kernel params
+  desktop.nix              # SwayFX system-wide (ly, xdg-portal, polkit, gnome-keyring)
+  packages.nix             # system packages, obs-studio, fonts, nix settings
+  services.nix             # openssh, tailscale, pipewire, thunar, kanata, flatpak
+  virt.nix                 # libvirtd, virt-manager, podman
+  zramswap.nix             # zramSwap compression
 
 modules/home/
-  desktop.nix              # DM, theming, fonts, dotfile symlinks (xdg.configFile)
-  sway.nix                 # SwayFX as home-manager module (configFile paths)
+  desktop.nix              # packaged scripts, GTK/Qt theming, dotfile symlinks, wallust seeding
+  sway.nix                 # SwayFX as home-manager module (includes dotfiles/sway/config)
   packages.nix             # user packages
-  programs.nix             # git, firefox, mpv, yazi, pipes
-  services.nix             # swayidle, mako, playerctld, syncthing
-  shell.nix                # zsh, starship, fzf, zoxide, utilities
+  programs.nix             # neovim, kitty, tmux, waybar, mpv, git, direnv, fzf, bat, btop
+  services.nix             # swaync, swayidle, wlsunset, awww, cliphist, playerctld, syncthing
+  shell.nix                # zsh, zoxide, shell aliases
 
 dotfiles/                  # wired via mkOutOfStoreSymlink — edit live
   sway/                    #   autostart.conf, keybinds.conf, rules.conf, theme.conf
   waybar/                  #   config.jsonc, shared_modules.jsonc, style.css
   wallust/                 #   wallust.toml + templates/ (colors-kitty, -sway, -waybar.css, swaylock, tmux, wob)
   nvim/                    #   lua/plugins/*, lua/config/*
-  kitty/ wofi/ wob/ swaylock/ swaync/
+  wofi/ wob/ swaylock/ swaync/
 
-scripts/                   # ko, mirror, wallpaper, note, screenshot, wofi*, wob-runner
-wallpapers/                # ~40 wallpapers (.jpg)
+scripts/                   # calc.sh, mirror, wallpaper, note, screenshot, wofi*, wob-runner
+wallpapers/                # ~35 wallpapers (.jpg)
 ```
 
 ## Key Conventions

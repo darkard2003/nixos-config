@@ -17,6 +17,7 @@
   };
 
   services.cliphist.enable = true;
+  services.playerctld.enable = true;
 
   services.kanshi.enable = true;
   services.kdeconnect = {

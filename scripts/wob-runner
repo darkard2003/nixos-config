@@ -3,10 +3,6 @@ set -euo pipefail
 
 WOBSOCK="${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/wob.sock"
 
-# Kill existing Wob and tail instances
-pkill -f "tail -f.*wob.sock" 2>/dev/null || true
-pkill -x wob 2>/dev/null || true
-
 # Re-create FIFO
 rm -f "$WOBSOCK"
 mkfifo "$WOBSOCK"
@@ -21,4 +17,4 @@ if [ ! -f "$CONFIG_FILE" ]; then
 fi
 
 # Run tail piped into wob
-exec tail -f "$WOBSOCK" | wob -c "$CONFIG_FILE"
+tail -f "$WOBSOCK" | wob -c "$CONFIG_FILE"

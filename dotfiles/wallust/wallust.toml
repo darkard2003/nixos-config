@@ -12,7 +12,6 @@ swaylock = { src = "swaylock-config", target = "~/.cache/wallust/swaylock-config
 shell = { src = "colors.sh", target = "~/.cache/wallust/colors.sh" }
 wob = { src = "wob.ini", target = "~/.cache/wallust/wob.ini" }
 tmux = { src = "colors-tmux.conf", target = "~/.cache/wallust/colors-tmux.conf" }
-nvim = { src = "colors-wallust.lua", target = "~/.cache/wallust/colors-wallust.lua" }
 
 [hooks]
 sway = "swaymsg reload 2>/dev/null || true"
@@ -20,3 +19,4 @@ swaync = "swaync-client -rs 2>/dev/null || true"
 waybar = "pkill -SIGUSR2 -x .waybar-wrapped 2>/dev/null || pkill -SIGUSR2 -f '(^|/)waybar$' 2>/dev/null || true"
 kitty = "pkill -USR1 kitty 2>/dev/null || true"
 tmux = "tmux source-file ~/.config/tmux/tmux.conf 2>/dev/null || true"
+wob = "systemctl --user restart wob.service 2>/dev/null || true"

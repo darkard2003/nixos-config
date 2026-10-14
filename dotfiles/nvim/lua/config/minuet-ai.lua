@@ -28,14 +28,8 @@ else
   vim.notify("VectorCode plugin not found!", vim.log.levels.WARN)
 end
 
--- Global state for our health check
-vim.g.ai_server_online = true
-
 -- 2. Define Template Function
 local function template_function(pref, suff, _)
-  -- Fallback safeguard: abort if offline
-  if not vim.g.ai_server_online then return "" end
-
   local context_parts = {}
   local current_length = 0
 
@@ -76,7 +70,7 @@ require('minuet').setup {
     openai_fim_compatible = {
       api_key = 'TERM',
       name = 'Ollama',
-      end_point = 'http://localhost:11434/v1/completions',
+      end_point = 'http://darkmac:11434/v1/completions',
       model = 'qwen2.5-fast-complete-mini',
       stream = true,
       optional = {
@@ -116,37 +110,3 @@ vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
   desc = "Auto-register buffer for VectorCode context",
 })
 
--- 5. THE CIRCUIT BREAKER (Health Check)
-local uv = vim.uv or vim.loop
-
-local function check_ai_server()
-  vim.system({ 'curl', '-s', '--max-time', '1', 'http://darkmac:11434' }, {}, function(obj)
-    local is_online = (obj.code == 0)
-
-    if is_online and not vim.g.ai_server_online then
-      vim.schedule(function()
-        vim.g.ai_server_online = true
-        local ok, minuet = pcall(require, 'minuet')
-        if ok and minuet.config then
-          minuet.config.enabled = true
-        end
-        vim.notify("Minuet: Reconnected to darkmac. AI enabled.", vim.log.levels.INFO)
-      end)
-    elseif not is_online and vim.g.ai_server_online then
-      vim.schedule(function()
-        vim.g.ai_server_online = false
-        local ok, minuet = pcall(require, 'minuet')
-        if ok and minuet.config then
-          minuet.config.enabled = false
-        end
-        -- Optional: uncomment the next line if you want to be notified when it drops
-        vim.notify("Minuet: Server unreachable. AI disabled.", vim.log.levels.WARN)
-      end)
-    end
-  end)
-end
-
--- Start the background loop
-check_ai_server()
-local ping_timer = uv.new_timer()
-ping_timer:start(15000, 15000, check_ai_server)

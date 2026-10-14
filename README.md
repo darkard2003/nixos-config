@@ -46,19 +46,18 @@ Known flake hosts: `dark-think`, `dark-nix` (the hostname must match the attribu
 │       ├── default.nix
 │       └── hardware-configuration.nix
 ├── modules/
-│   ├── system/                # boot, desktop, packages, services, virt, zswap
+│   ├── system/                # boot, desktop, packages, services, virt, zramswap
 │   └── home/                  # desktop, packages, programs, services, shell, sway
 ├── dotfiles/                  # User app configs (out-of-store symlinks — edit live)
-│   ├── kitty/                 # Kitty terminal config
 │   ├── nvim/                  # Neovim config (lua/config, lua/plugins)
 │   ├── sway/                  # Modular SwayFX config
-│   ├── swaylock/              # Screen locker configuration
+│   ├── swaylock/              # Screen locker fallback configuration
 │   ├── swaync/                # Sway Notification Center configuration
 │   ├── wallust/               # Dynamic color generator + templates/
 │   ├── waybar/                # Status bar config, styles, & scripts
 │   ├── wob/                   # Overlay volume/brightness bar config
 │   └── wofi/                  # Application launcher config
-├── scripts/                   # calc.sh, ko, mirror, note, screenshot, wallpaper,
+├── scripts/                   # calc.sh, mirror, note, screenshot, wallpaper,
 │                              # wob-runner, wofi, wofi-emoji, wofi_wal
 └── wallpapers/                # Wallpaper collection (~35 images)
 ```
@@ -67,19 +66,15 @@ Known flake hosts: `dark-think`, `dark-nix` (the hostname must match the attribu
 
 ## 🛠 Features & Installed Software
 
-* **Desktop Environment**: SwayFX with modular configuration split across keybindings,
-  decoration, rules, variables, and display settings.
-* **Theming**: Dynamic color extraction and multi-app theming via Wallust.
-* **Audio**: PipeWire with PulseAudio compatibility.
-* **Power Management**: TLP power profiles & battery charge thresholds on the ThinkPad;
-  `thermald` and VA-API drivers on the Intel host.
-* **Security / Boot**: Secure Boot via lanzaboote, `zswap` compression.
-* **Virtualization**: `libvirtd`.
-* **Services**: Syncthing, printing (CUPS), Avahi, OpenSSH.
+* **Desktop Environment**: SwayFX with `ly` display manager and modular configuration split across keybindings, decoration, rules, and autostart settings.
+* **Theming**: Dynamic color extraction and multi-app theming via Wallust (automatically seeded with `cowboy-blue.jpg` on Home Manager activation).
+* **Audio**: PipeWire with PulseAudio compatibility and `playerctld` media control.
+* **Power Management**: TLP power profiles & battery charge thresholds on the ThinkPad; `thermald` and VA-API drivers on the Intel host.
+* **Boot & Memory**: `systemd-boot` with Plymouth (`nixos-bgrt`), `zramSwap` compressed swap.
+* **Virtualization**: `libvirtd` / `virt-manager` and Podman.
+* **Services**: Syncthing, Tailscale, Kanata (home-row mods), Avahi, OpenSSH, Flatpak.
 * **Fonts**: Font Awesome and JetBrains Mono Nerd Font.
-* **User Tools**: `btop`, `ripgrep`, `tmux`, `git`, `kitty`, `grim`, `slurp`,
-  `wl-clipboard`, `neovim`, `nixd`, `nil`, `yazi`, `starship`, `zoxide`, `fzf`,
-  `mako`, `swayidle`, `playerctld`, and Zen Browser.
+* **User Tools**: `btop`, `ripgrep`, `tmux`, `git`, `kitty`, `grim`, `slurp`, `wl-clipboard`, `neovim`, `nixd`, `nil`, `thunar`, `zoxide`, `fzf`, `swaync`, `swayidle`, `wob`, and Zen Browser.
 
 ---
 

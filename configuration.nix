@@ -12,7 +12,7 @@
     ./modules/system/packages.nix
     ./modules/system/services.nix
     ./modules/system/virt.nix
-    ./modules/system/zswap.nix
+    ./modules/system/zramswap.nix
   ];
 
   networking.hostName = hostname;

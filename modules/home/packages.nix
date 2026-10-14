@@ -23,14 +23,9 @@ in
     wofi
     cheese
     ripgrep
-    grim
-    slurp
     wl-clipboard
     libnotify
-    (tesseract.override { enableLanguages = [ "eng" ]; })
-    wtype
     xdg-user-dirs
-    wl-mirror
     antigravity-nix.packages.${system}.default
     antigravity-nix.packages.${system}.google-antigravity-ide
     antigravity-nix.packages.${system}.google-antigravity-cli
@@ -60,7 +55,6 @@ in
     jq
     imagemagick
     bluetui
-    # (pkgs.handlr-regex.overrideAttrs (_: { doCheck = false; }))
     handlr-regex
 
     # Neovim & Mason runtime dependencies

@@ -92,15 +92,19 @@ fi
 log "INFO" "Target wallpaper image: $wallpaper_path"
 
 # Step 4: Ensure awww-daemon is active and apply wallpaper
-if ! pgrep -x "awww-daemon" > /dev/null; then
-    log "INFO" "Starting awww-daemon background service..."
-    awww-daemon &
-    sleep 0.5
-fi
+if [ -n "${WAYLAND_DISPLAY:-}" ]; then
+    if ! pgrep -x "awww-daemon" > /dev/null; then
+        log "INFO" "Starting awww-daemon background service..."
+        awww-daemon >/dev/null 2>&1 &
+        sleep 0.5
+    fi
 
-log "INFO" "Applying wallpaper via awww daemon..."
-if ! awww img "$wallpaper_path" --transition-type wipe --transition-angle 45 --transition-duration 2 --transition-fps 60 2>>"$LOG_FILE"; then
-    log "WARN" "awww img command exited with non-zero (Wayland display socket may be inactive in headless test)."
+    log "INFO" "Applying wallpaper via awww daemon..."
+    if ! awww img "$wallpaper_path" --transition-type wipe --transition-angle 45 --transition-duration 2 --transition-fps 60 2>>"$LOG_FILE"; then
+        log "WARN" "awww img command exited with non-zero (Wayland display socket may be inactive in headless test)."
+    fi
+else
+    log "INFO" "WAYLAND_DISPLAY not set; skipping live awww transition (seeding theme cache only)."
 fi
 
 

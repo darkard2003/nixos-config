@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -16,9 +17,11 @@ let
       imagemagick
       sway
       swaynotificationcenter
+      systemd
       procps
       findutils
       gnugrep
+      coreutils
     ];
     text = builtins.readFile ../../scripts/wallpaper;
   };
@@ -31,30 +34,25 @@ let
       wl-clipboard
       libnotify
       (tesseract.override { enableLanguages = [ "eng" ]; })
-      imagemagick
-      kitty
-      xdg-utils
+      handlr-regex
+      xdg-user-dirs
+      coreutils
     ];
     text = builtins.readFile ../../scripts/screenshot;
   };
 
-  wofiEmojiScript = pkgs.writeScriptBin "wofi-emoji" ''
-    #!${pkgs.bash}/bin/bash
-    PATH="${
-      pkgs.lib.makeBinPath (
-        with pkgs;
-        [
-          wofi
-          wtype
-          wl-clipboard
-          coreutils
-          gnused
-        ]
-      )
-    }:$PATH"
-    export PATH
-    ${builtins.readFile ../../scripts/wofi-emoji}
-  '';
+  wofiEmojiScript = pkgs.writeShellApplication {
+    name = "wofi-emoji";
+    runtimeInputs = with pkgs; [
+      wofi
+      wtype
+      wl-clipboard
+      coreutils
+      gnused
+    ];
+    checkPhase = "";
+    text = builtins.readFile ../../scripts/wofi-emoji;
+  };
 
   mirrorScript = pkgs.writeShellApplication {
     name = "mirror";
@@ -73,8 +71,22 @@ let
       wofi
       neovim
       kitty
+      libnotify
+      findutils
+      gnugrep
+      gnused
+      coreutils
     ];
     text = builtins.readFile ../../scripts/note;
+  };
+
+  wobRunnerScript = pkgs.writeShellApplication {
+    name = "wob-runner";
+    runtimeInputs = with pkgs; [
+      wob
+      coreutils
+    ];
+    text = builtins.readFile ../../scripts/wob-runner;
   };
 in
 {
@@ -84,7 +96,30 @@ in
     wofiEmojiScript
     mirrorScript
     noteScript
+    wobRunnerScript
   ];
+
+  systemd.user.services.wob = {
+    Unit = {
+      Description = "Wayland Overlay Bar (wob)";
+      PartOf = [ "sway-session.target" ];
+      After = [ "sway-session.target" ];
+    };
+    Service = {
+      ExecStart = "${wobRunnerScript}/bin/wob-runner";
+      Restart = "on-failure";
+      RestartSec = 1;
+    };
+    Install = {
+      WantedBy = [ "sway-session.target" ];
+    };
+  };
+
+  home.activation.seedWallustTheme = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ ! -f "$HOME/.cache/wallust/colors-sway" ] || [ ! -f "$HOME/.cache/wallust/lockscreen_blur.png" ]; then
+      $DRY_RUN_CMD ${wallpaperScript}/bin/wallpaper "${config.home.homeDirectory}/nixos-config/wallpapers/cowboy-blue.jpg" || true
+    fi
+  '';
 
   home.pointerCursor = {
     name = "Vimix-cursors";
@@ -154,9 +189,4 @@ in
     "wob".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/wob";
     "nvim".source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/nvim";
   };
-
-  # home.file.".local/bin" = {
-  #   source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/scripts";
-  #   recursive = true;
-  # };
 }

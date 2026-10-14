@@ -200,7 +200,7 @@
     "menu-file": "$HOME/.config/waybar/power_menu.xml",
     "menu-actions": {
       "shutdown": "poweroff",
-      "lock": "swaylock -f -c 0000",
+      "lock": "swaylock -f -C ~/.cache/wallust/swaylock-config 2>/dev/null || swaylock -f",
       "reboot": "reboot",
       "suspend": "systemctl suspend",
       "hibernate": "systemctl hibernate"

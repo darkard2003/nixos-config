@@ -82,7 +82,8 @@
       }
 
       setopt PROMPT_SUBST
-      PS1="%B$(get_os_logo) %F{blue}%n@%M%F{green}[%~]%b%f%(!.#.$) "
+      OS_LOGO="$(get_os_logo)"
+      PS1="%B''${OS_LOGO} %F{blue}%n@%M%F{green}[%~]%b%f%(!.#.$) "
       RPROMPT='$(get_git_info)'
 
       setopt AUTO_CD
@@ -93,7 +94,7 @@
       setopt COMPLETE_IN_WORD
 
       [ -f "$HOME/.cache/wallust/colors.sh" ] && source "$HOME/.cache/wallust/colors.sh"
-      command -v fastfetch &>/dev/null && fastfetch -c examples/7.jsonc
+      [[ -z "''${TMUX:-}" && -z "''${NVIM:-}" ]] && command -v fastfetch &>/dev/null && fastfetch -c examples/7.jsonc
     '';
   };
 }

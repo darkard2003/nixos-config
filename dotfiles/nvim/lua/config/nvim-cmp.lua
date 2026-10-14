@@ -74,13 +74,7 @@ cmp.setup({
     }),
   }),
   sources = cmp.config.sources({
-    {
-      name = 'minuet',
-      group_index = 1,
-      enabled = function()
-        return vim.g.ai_server_online == true
-      end
-    },
+    { name = 'minuet',     group_index = 1 },
     { name = "cmp-ai",     group_index = 1 },
     { name = "supermaven", group_index = 1 },
     { name = "copilot",    group_index = 2 },
@@ -89,7 +83,7 @@ cmp.setup({
   }, {
     { name = 'buffer' },
   }),
-  performence = {
+  performance = {
     fetching_timeout = 2000,
   },
 })

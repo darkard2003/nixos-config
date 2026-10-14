@@ -4,7 +4,7 @@
 PICTURES_DIR="$(xdg-user-dir PICTURES)"
 
 openScreenshot(){
-    kitty --app-id="user-dialog" --config="/dev/null" -e bash -c "kitten icat '$1'; read -p 'press enter to close...'" 
+    handlr open "$1"
 }
 
 copyText(){
@@ -37,10 +37,15 @@ notify_and_open() {
 
     action=$(notify-send -A "open=Open" -A "save=Save" -A "copy=Copy Text" "Screenshot" "Screenshot $filename taken")
 
-    if [ "$action" = "save" ]; then
+    if [ "$action" = "open" ]; then
+      openScreenshot "$tmp_path"
+    elif [ "$action" = "save" ]; then
       saveScreenshot "$filename" "$tmp_path"
     elif [ "$action" = "copy" ]; then
       copyText "$tmp_path"
+      rm -f "$tmp_path"
+    else
+      rm -f "$tmp_path"
     fi
 }
 
@@ -64,7 +69,7 @@ take_screenshot() {
     fi
 }
 
-if [ "$1" = "full" ]; then
+if [ "${1:-}" = "full" ]; then
     take_screenshot "full"
 else
     take_screenshot "partial"
