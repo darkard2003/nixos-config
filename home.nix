@@ -1,4 +1,5 @@
 {
+  inputs,
   username,
   ...
 }:
@@ -9,6 +10,7 @@
   home.stateVersion = "26.05";
 
   imports = [
+    inputs.zen-browser.homeModules.twilight
     ./modules/home/packages.nix
     ./modules/home/shell.nix
     ./modules/home/desktop.nix

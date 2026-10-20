@@ -1,6 +1,5 @@
 {
   pkgs,
-  zen-browser,
   ...
 }:
 
@@ -15,12 +14,11 @@
     fontconfig
     tailscale
     gcr_4
-    zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   programs.obs-studio = {
     enable = true;
-    enableVirtualCamera = true;
+    # enableVirtualCamera = true;
     plugins = with pkgs.obs-studio-plugins; [
       wlrobs
       obs-backgroundremoval

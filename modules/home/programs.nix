@@ -4,6 +4,8 @@
 }:
 
 {
+  programs.zen-browser.enable = true;
+
   programs.imv.enable = true;
 
   programs.pi-coding-agent = {
