@@ -20,10 +20,10 @@
   services.playerctld.enable = true;
 
   services.kanshi.enable = true;
-  services.kdeconnect = {
-    enable = true;
-    indicator = true;
-  };
+  # services.kdeconnect = {
+  #   enable = true;
+  #   indicator = true;
+  # };
 
   services.swayidle = {
     enable = true;
